@@ -15,3 +15,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 
 * [Mutiagent Bidirectionally-Coordinated Nets Emergence of Human-level Coordination in Learning to Play StarCraft Combat Games](https://arxiv.org/pdf/1703.10069.pdf)
 * [StarCraft II Build Order Optimization using Deep Reinforcement Learning and Monte-Carlo Tree Search](https://arxiv.org/pdf/2006.10525.pdf)
+
+
+## Maps
+* [FindAndDefeatGhosts](https://github.com/caiyangcy/SC2DC/blob/master/maps/FindAndDefeatGhosts.SC2Map)
