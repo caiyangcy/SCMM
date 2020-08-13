@@ -8,7 +8,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * Cooperation
 * Coordination
 
-## Rview Paper
+## Review Paper
 * [Multi-Agent Reinforcement Learning: A Selective Overview of Theories and Algorithms](https://arxiv.org/pdf/1911.10635.pdf)
 
 ## Research Paper
