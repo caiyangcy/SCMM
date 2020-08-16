@@ -19,5 +19,8 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * [Efficient Communication in Multi-AgentReinforcement Learning via Variance Based Control](https://papers.nips.cc/paper/8586-efficient-communication-in-multi-agent-reinforcement-learning-via-variance-based-control.pdf)
 * [Deep Multi-Agent Reinforcement Learning forDecentralised Continuous Cooperative Control](https://arxiv.org/pdf/2003.06709.pdf)
 
+## Thesis
+* [Heuristic Search Techniques for Real-Time Strategy Games](http://www.cs.mun.ca/~dchurchill/pdf/DavidChurchill_phd_thesis.pdf)
+
 ## Maps
 * [FindAndDefeatGhosts](https://github.com/caiyangcy/SC2DC/blob/master/maps/FindAndDefeatGhosts.SC2Map)
