@@ -22,9 +22,10 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 ## Thesis
 * [Heuristic Search Techniques for Real-Time Strategy Games](http://www.cs.mun.ca/~dchurchill/pdf/DavidChurchill_phd_thesis.pdf)
 
-## Environment / Simulation
+## Environment / Simulation / API
 * [pysc2](https://github.com/deepmind/pysc2)
 * [SparCraft](https://github.com/davechurchill/ualbertabot/wiki/SparCraft-Home)
+* [Brood War API](https://github.com/bwapi/bwapi)
 
 ## Maps
 * [FindAndDefeatGhosts](https://github.com/caiyangcy/SC2DC/blob/master/maps/FindAndDefeatGhosts.SC2Map)
