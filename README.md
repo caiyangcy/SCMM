@@ -10,6 +10,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 
 ## Review Paper
 * [Multi-Agent Reinforcement Learning: A Selective Overview of Theories and Algorithms](https://arxiv.org/pdf/1911.10635.pdf)
+* [A Survey of Real-Time Strategy Game AI Research and Competition in StarCraft](https://www.cs.mun.ca/~dchurchill/pdf/starcraft_survey.pdf)
 
 ## Research Paper
 
