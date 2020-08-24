@@ -35,4 +35,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * [SMAC](https://github.com/oxwhirl/smac)
 
 ## Maps
-* [FindAndDefeatGhosts](https://github.com/caiyangcy/SC2DC/blob/master/maps/FindAndDefeatGhosts.SC2Map)
+* You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/maps/map_info.md)
+
+# Acknowledgement
+* The coding is based on [SMAC](https://github.com/oxwhirl/smac)
