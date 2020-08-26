@@ -6,7 +6,7 @@ The first map *1m* can be used to study individual behaviour where the ally unit
 
 | Name | Ally Units | Enemy Units | Type |
 | :---: | :---: | :---: | :---:|
-| 1m| 1 Marine | 1 Marines | symmetric |
+| 1m| 1 Marine | 1 Marine | symmetric |
 | 3m | 3 Marines | 3 Marines | symmetric |
 | 8m | 8 Marines | 8 Marines | symmetric |
 | 25m | 25 Marines | 25 Marines | symmetric |
