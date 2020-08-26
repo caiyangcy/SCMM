@@ -2,8 +2,11 @@
 
 The following maps contain the same and single type of unit in both side.
 
+The first map *1m* can be used to study individual behaviour where the ally unit has been made to be invulnerable.
+
 | Name | Ally Units | Enemy Units | Type |
 | :---: | :---: | :---: | :---:|
+| 1m| 1 Marine | 1 Marines | symmetric |
 | 3m | 3 Marines | 3 Marines | symmetric |
 | 8m | 8 Marines | 8 Marines | symmetric |
 | 25m | 25 Marines | 25 Marines | symmetric |
@@ -12,6 +15,8 @@ The following maps contain the same and single type of unit in both side.
 | 10m_vs_11m | 10 Marines | 11 Marines | asymmetric |
 | 27m_vs_30m | 27 Marines | 30 Marines | asymmetric |
 | half_6m_vs_full_4m | 6 Marine | 4 Marines | asymmetric|
+| half_11m_vs_full_9m | 11 Marine | 9 Marines | asymmetric|
+| half_17m_vs_full_15m | 17 Marine | 15 Marines | asymmetric|
 
 ## Heterogeneous
 
@@ -25,6 +30,9 @@ The following maps contain multiple types and same amount of units in both side.
 | 1c3s5z | 1 Colossi & 3 Stalkers & 5 Zealots | 1 Colossi & 3 Stalkers & 5 Zealots | symmetric |
 | 3s5z_vs_3s6z | 3 Stalkers & 5 Zealots | 3 Stalkers & 6 Zealots  | asymmetric |
 | MMM2 |  1 Medivac, 2 Marauders & 7 Marines |  1 Medivac, 3 Marauders & 8 Marines | asymmetric |
+| 6m1r_vs_4g |  6 Marines & 1 Raven |  4 Ghosts | asymmetric |
+| 12m2r_vs_7g | 12 Marines & 2 Raven | 7 Ghosts | asymmetric |
+
 
 ## Tricks
 
