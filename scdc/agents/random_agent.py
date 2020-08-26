@@ -1,11 +1,38 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Aug 25 22:27:05 2020
 
-from smac.env import StarCraft2Env
-import numpy as np
+@author: Cai
+"""
+from scdc.agents.base_agent import BaseAgent
+from scdc.env.micro_env.mm_env import MMEnv
 import time
+import numpy as np
 import argparse
+
+
+class RandomAgents():
+    
+    def __init__(self, n_agents, env):
+        self.n_agents = n_agents 
+        self.env = env
+    
+    def step(self, obs, state):
+        # obs. state should be returned by env
+        # super(RandomAgents, self).step(obs)
+        # time.sleep(0.5)
+
+        actions = []
+        for agent_id in range(self.n_agents):
+            avail_actions = self.env.get_avail_agent_actions(agent_id)
+            avail_actions_ind = np.nonzero(avail_actions)[0]
+            action = np.random.choice(avail_actions_ind)
+            actions.append(action)
+
+        reward, terminated, _ = self.env.step(actions)
+        
+        return reward, terminated 
+        
 
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
 parser.add_argument('--map_name', default='half_6m_vs_full_4m', help='The name of the map. The full list can be found by running bin/map_list.')
@@ -16,8 +43,8 @@ parser.add_argument('--debug', default=True, help='Log messages about observatio
 parser.add_argument('--n_episodes', default=30, type=int, help='Number of episodes the game will run for.')
 
 args = parser.parse_args()
-
-def main():
+        
+if __name__ == "__main__":
     
     map_name = args.map_name
     step_mul = args.step_mul
@@ -25,37 +52,34 @@ def main():
     reward_sparse = args.reward_sparse
     debug = args.debug 
     n_episodes = args.n_episodes
-    
-    env = StarCraft2Env(map_name=map_name, step_mul=step_mul, difficulty=difficulty, reward_sparse=reward_sparse, debug=debug)
+
+    env = MMEnv(map_name=map_name, step_mul=step_mul, difficulty=difficulty, reward_sparse=reward_sparse, debug=debug)
     env_info = env.get_env_info()
 
     n_actions = env_info["n_actions"]
     n_agents = env_info["n_agents"]
-
+    
+    
+    ra = RandomAgents(n_agents, env)
+    
     for e in range(n_episodes):
         env.reset()
-        terminated = False
+        
         episode_reward = 0
-
+        
+        terminated = False
+        
         while not terminated:
             obs = env.get_obs()
             state = env.get_state()
-
-            actions = []
-            for agent_id in range(n_agents):
-                avail_actions = env.get_avail_agent_actions(agent_id)
-                avail_actions_ind = np.nonzero(avail_actions)[0]
-                action = np.random.choice(avail_actions_ind)
-                actions.append(action)
-
-            reward, terminated, _ = env.step(actions)
-            print('reward: ', reward)
-            episode_reward += reward
-
+            
+            reward, terminated  = ra.step(obs, state)
+            
+            episode_reward += reward 
+            
         print("Total reward in episode {} = {}".format(e, episode_reward))
-        time.sleep(0.5)
+            
     env.close()
-
-
-if __name__ == "__main__":
-    main()
+    
+    
+    
