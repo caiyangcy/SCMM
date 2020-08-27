@@ -35,7 +35,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * [SMAC](https://github.com/oxwhirl/smac)
 
 ## Maps
-* You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/maps/map_info.md)
+* You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/docs/map_info.md)
 
 # Acknowledgement
 * The coding is based on [SMAC](https://github.com/oxwhirl/smac)
