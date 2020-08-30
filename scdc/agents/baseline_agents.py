@@ -27,7 +27,7 @@ class FocusFire():
                     actions.append(move_action) if move_action else actions.append(1)
                 else:
                     actions.append(6+all_closest_id)
-                    
+        print(actions)
         reward, terminated, _ = self.env.step(actions)
         return reward, terminated 
     
