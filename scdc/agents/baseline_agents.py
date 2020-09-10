@@ -22,7 +22,7 @@ class FocusFire():
             closest_enermy = self.env.get_unit_by_id(all_closest_id)
             actions = []
             for agent_id in range(self.n_agents):
-                if not avail_to_shoot[agent_id]: # This unit is too far from the closest one, need to move a distance
+                if avail_to_shoot[agent_id] is None: # This unit is too far from the closest one, need to move a distance
                     move_action = self.find_move_direction(unit, closest_enermy)
                     actions.append(move_action) if move_action else actions.append(1)
                 else:
@@ -106,10 +106,7 @@ class AttackClosest(): # Always attcking
         for agent_id in range(self.n_agents):
             unit = self.env.get_unit_by_id(agent_id)
             close_e_id, close_e_unit = self.find_closest_enermy(unit, target_items)
-            
-            if not close_e_id: # No closest enermy available Then move to the closest
-                # print('close e id: ', close_e_id)
-                # print('close e unit: ', close_e_unit)
+            if close_e_id is None: # No closest enermy available Then move to the closest
                 if self.personality != 'passive':
                     action = self.find_move_direction(unit, close_e_unit)
                 else:
@@ -130,6 +127,7 @@ class AttackClosest(): # Always attcking
         close_e_id = None 
         close_e_unit = None
         min_dist = math.hypot(self.env.max_distance_x, self.env.max_distance_y)
+
         for t_id, t_unit in target_items: # t_id starts from 0
             if t_unit.health > 0:
                 dist = self.env.distance(unit.pos.x, unit.pos.y, t_unit.pos.x, t_unit.pos.y)
@@ -138,7 +136,6 @@ class AttackClosest(): # Always attcking
                     close_e_unit = t_unit 
                     if dist <= shoot_range:
                         close_e_id = t_id
-                    
         return close_e_id, close_e_unit
     
     def find_move_direction(self, unit, target):
@@ -158,9 +155,6 @@ class AttackClosest(): # Always attcking
         return action 
 
 
-
-
-
 class AttackWeakest():
     def __init__(self, n_agents, env, personality='passive'):
         self.n_agents = n_agents 
@@ -177,7 +171,7 @@ class AttackWeakest():
             unit = self.env.get_unit_by_id(agent_id)
             weakest_e_id, weakest_e_unit  = self.find_weakest_enermy(unit, target_items)
             
-            if not weakest_e_id: # No closest enermy available
+            if weakest_e_id is None: # No closest enermy available
                 # Then move to the closest
                 if self.personality != 'passive':
                     action = self.find_move_direction(unit, weakest_e_unit)
@@ -229,6 +223,7 @@ class AttackWeakest():
             elif self.env.can_move(unit, Direction.SOUTH): # south                        
                 action = 3
         return action 
+    
     
 class AlternatingFire():
     # TODO: Implement alternating fire trick
