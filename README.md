@@ -37,5 +37,11 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 ## Maps
 * You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/docs/map_info.md)
 
+# Run
+
+To get started:
+
+    python -m scdc.agents.agent_demo
+    
 # Acknowledgement
 * The coding is based on [SMAC](https://github.com/oxwhirl/smac)
