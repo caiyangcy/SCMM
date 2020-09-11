@@ -337,8 +337,6 @@ class MMEnv(MultiAgentEnv):
         self.max_distance_y = map_play_area_max.y - map_play_area_min.y
         self.map_x = map_info.map_size.x
         self.map_y = map_info.map_size.y
-        print('line 340, map_x and map_y:', self.map_x, self.map_y)
-        print('line 340, max_distance_x and max_distance_y:', self.max_distance_x, self.max_distance_y)
         if map_info.pathing_grid.bits_per_pixel == 1:
             vals = np.array(list(map_info.pathing_grid.data)).reshape(
                 self.map_x, int(self.map_y / 8))
@@ -808,6 +806,21 @@ class MMEnv(MultiAgentEnv):
             self.baneling_id: 1
         }
         return switcher.get(unit.unit_type, 15)
+    
+    
+    def unit_damage(self, unit):
+        """Returns the maximal cooldown for a unit."""
+        switcher = {
+            self.marine_id: 6,
+            self.marauder_id: 10,
+            self.stalker_id: 13,
+            self.zealot_id: 8, # 8x2
+            self.colossus_id: 10, # 10x2
+            self.hydralisk_id: 12,
+            self.zergling_id: 5,
+            self.baneling_id: 16 # splash
+        }
+        return switcher.get(unit.unit_type, 6)
 
     def unit_weapon_cooldown(self, unit):
         return unit.weapon_cooldown

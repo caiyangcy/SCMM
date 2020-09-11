@@ -10,7 +10,7 @@ parser.add_argument('--step_mul', default=2, type=int, help='How many game steps
 parser.add_argument('--difficulty', default='7', help='The difficulty of built-in computer AI bot (default is "7").')
 parser.add_argument('--reward_sparse', default=False, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
-parser.add_argument('--n_episodes', default=20, type=int, help='Number of episodes the game will run for.')
+parser.add_argument('--n_episodes', default=1, type=int, help='Number of episodes the game will run for.')
 parser.add_argument('--agent', default="FocusFire", type=str, help='Number of episodes the game will run for.')
 parser.add_argument('--alpha', default=1, type=int, help='Parameter used for calculating score in HybridAttack.')
 
