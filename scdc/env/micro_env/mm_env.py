@@ -906,11 +906,11 @@ class MMEnv(MultiAgentEnv):
     def get_enermy_center(self):
         center_x, center_y = 0, 0
         count = 0
-        for enermy_id in range(self.n_enemies):
-            unit = self.get_unit_by_id(enermy_id) 
-            if unit.health > 0:
-                center_x += unit.pos.x 
-                center_y += unit.pos.y 
+        target_items = self.enemies.items()
+        for t_id, t_unit in target_items: # t_id starts from 0
+            if t_unit.health > 0:
+                center_x += t_unit.pos.x 
+                center_y += t_unit.pos.y 
                 count += 1
             
         center_x /= count

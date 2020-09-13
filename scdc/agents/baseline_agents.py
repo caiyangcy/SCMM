@@ -245,11 +245,119 @@ class Positioning():
         self.in_position = False
         
     def step(self, obs, state):
-        if self.in_position:
-            actions = self.find_close_k()
+        if self.map_name == 'bane_vs_bane':
+            if self.in_position:
+                actions = self.find_close_k()
+            else:
+                self.in_position, actions = self.partition()                
+        elif self.map_name == 'so_many_baneling':
+            spread_points = [(10, 18.5), (19.5, 12.5), (7.5, 15), (15, 8), (4, 12), (12, 4), (3, 3.5)]
+            
+            actions = []
+            actions2 = []
+            for i in range(self.n_agents):
+                unit = self.env.get_unit_by_id(i)
+                if unit.health > 0:
+                    actions2.append([unit.pos.x, unit.pos.y])
+                    if self.env.distance(unit.pos.x, unit.pos.y, spread_points[i][0], spread_points[i][1]) < 0.5:
+                        close_e_dist, close_e_id = self.find_close(unit)
+                        if close_e_dist <= self.env.unit_shoot_range(unit):
+                            actions.append(close_e_id+6)
+                        else:
+                            actions.append(1)
+                    else:
+                        action = 1
+                        if spread_points[i][0] > unit.pos.x or spread_points[i][1] > unit.pos.y:
+                            # move top right
+                            if spread_points[i][0]-unit.pos.x > spread_points[i][1]-unit.pos.y:
+                                action = 4
+                            else:
+                                action = 2
+                            
+                        elif spread_points[i][0] < unit.pos.x or spread_points[i][1] < unit.pos.y:
+                            if np.abs(spread_points[i][0]-unit.pos.x) > np.abs(spread_points[i][1]-unit.pos.y):
+                                action = 5
+                            else:
+                                action = 3
+                        actions.append(action)
+                else:
+                    actions.append(1)
         else:
-            self.in_position, actions = self.partition()                
-         
+            # y_thres = 13
+            # actions = []
+            # e_center_x, e_center_y = self.env.get_enermy_center()
+            # y1, y2 = self.env.get_unit_by_id(0).pos.y, self.env.get_unit_by_id(1).pos.y
+            # if e_center_y <= y_thres:
+            #     if y1 >= y_thres and y2 >= y_thres: # likely to be on the bridge
+            #         # find close and attack
+            #         for i in range(self.n_agents):
+            #             unit = self.env.get_unit_by_id(i)
+            #             close_e_dist, close_e_id = self.find_close(unit)
+            #             actions.append(close_e_id+6)
+            #     else:
+            #         actions = [2, 2]
+            # else:
+            #     if y1 < y_thres and y2 < y_thres: # likely to be on the plane
+            #         # find close and attack
+            #         for i in range(self.n_agents):
+            #             unit = self.env.get_unit_by_id(i)
+            #             close_e_dist, close_e_id = self.find_close(unit)
+            #             actions.append(close_e_id+6)
+            #     else:
+            #         actions = [3, 3]
+            y_thres = 12.5
+            actions = []
+            e_center_x, e_center_y = self.env.get_enermy_center()
+            
+            e_higher_than_y = 0
+            e_total = 0
+            target_items = self.env.enemies.items()
+            for _, t_unit in target_items: # t_id starts from 0
+                if t_unit.health > 0:
+                    e_total += 1
+                    if t_unit.pos.y > y_thres:
+                        e_higher_than_y += 1
+            
+            y1, y2 = self.env.get_unit_by_id(0).pos.y, self.env.get_unit_by_id(1).pos.y
+            print()
+            print('y1: {} y2: {}'.format(y1, y2))
+            # assert False
+            print('e_higher_than_y: ', e_higher_than_y)
+            print('e_total: ', e_total)
+            print('thres: ', e_total*0.8)
+            
+            if e_higher_than_y <= e_total*0.7:
+                if y1 >= 14 and y2 >= 14: # likely to be on the bridge
+                    # find close and attack
+                    print('bridge attack')
+                    for i in range(self.n_agents):
+                        unit = self.env.get_unit_by_id(i)
+                        close_e_dist, close_e_id = self.find_close(unit)
+                        actions.append(close_e_id+6)
+                elif e_higher_than_y >= e_total*0.4:
+                    print('bridge move')
+                    actions = [2, 2]
+                else:
+                    print('bridge attack')
+                    for i in range(self.n_agents):
+                        unit = self.env.get_unit_by_id(i)
+                        close_e_dist, close_e_id = self.find_close(unit)
+                        actions.append(close_e_id+6)
+                        
+            elif e_higher_than_y > e_total*0.7:
+                if y1 < 11 and y2 < 11: # likely to be on the plane
+                    # find close and attack
+                    print('plane attack')
+                    for i in range(self.n_agents):
+                        unit = self.env.get_unit_by_id(i)
+                        close_e_dist, close_e_id = self.find_close(unit)
+                        actions.append(close_e_id+6)
+                else:
+                    print('plane move')
+                    actions = [3, 3]
+            
+            print()
+            
         reward, terminated, _ = self.env.step(actions)
         return reward, terminated    
     
@@ -257,7 +365,6 @@ class Positioning():
         if self.map_name == 'bane_vs_bane':
             # 5 partitions
             zerg_partition_counter = 1
-            banelings, zergs = [], []
             actions = []
             patition_done = True
             
@@ -288,10 +395,6 @@ class Positioning():
                     
             return patition_done, actions
         
-        elif self.map_name == 'so_many_baneling':
-            pass
-        else:
-            pass
     
     def get_group_center(self, group):
         center_x, center_y = 0, 0
@@ -346,6 +449,19 @@ class Positioning():
             e_id_arr.append(min_dist_id+6)
         
         return e_id_arr
+    
+    def find_close(self, unit):
+        target_items = self.env.enemies.items()
+
+        min_dist = math.hypot(self.env.max_distance_x, self.env.max_distance_y)
+        mind_e_id = None
+        for t_id, t_unit in target_items: # t_id starts from 0
+            if t_unit.health > 0:
+                dist = self.env.distance(unit.pos.x, unit.pos.y, t_unit.pos.x, t_unit.pos.y)
+                if dist < min_dist:
+                    min_dist = dist
+                    min_e_id = t_id
+        return min_dist, min_e_id
     
 class WallOff():
     '''
