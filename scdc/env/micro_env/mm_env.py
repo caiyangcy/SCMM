@@ -337,6 +337,12 @@ class MMEnv(MultiAgentEnv):
         self.max_distance_y = map_play_area_max.y - map_play_area_min.y
         self.map_x = map_info.map_size.x
         self.map_y = map_info.map_size.y
+        # print('map_play_area_max.x: ', map_play_area_max.x)
+        # print('map_play_area_min.x: ', map_play_area_min.x)
+        # print('map_play_area_max.y: ', map_play_area_max.y)
+        # print('map_play_area_min.y: ', map_play_area_min.y)
+        # print('map_x: ', self.map_x)
+        # print('map_y: ', self.map_y)
         if map_info.pathing_grid.bits_per_pixel == 1:
             vals = np.array(list(map_info.pathing_grid.data)).reshape(
                 self.map_x, int(self.map_y / 8))
@@ -884,25 +890,31 @@ class MMEnv(MultiAgentEnv):
 
     def get_ally_center(self):
         center_x, center_y = 0, 0
+        count = 0
         for agent_id in range(self.n_agents):
             unit = self.get_unit_by_id(agent_id) 
-            center_x += unit.pos.x 
-            center_y += unit.pos.y 
+            if unit.health > 0:
+                center_x += unit.pos.x 
+                center_y += unit.pos.y 
+                count += 1
             
-        center_x /= self.n_agents
-        center_y /= self.n_agents 
+        center_x /= count
+        center_y /= count
         
         return center_x, center_y 
     
     def get_enermy_center(self):
         center_x, center_y = 0, 0
+        count = 0
         for enermy_id in range(self.n_enemies):
             unit = self.get_unit_by_id(enermy_id) 
-            center_x += unit.pos.x 
-            center_y += unit.pos.y 
+            if unit.health > 0:
+                center_x += unit.pos.x 
+                center_y += unit.pos.y 
+                count += 1
             
-        center_x /= self.n_agents
-        center_y /= self.n_agents 
+        center_x /= count
+        center_y /= count
         
         return center_x, center_y 
         

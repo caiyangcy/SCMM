@@ -264,9 +264,9 @@ map_param_registry = {
         "map_content": "marines",
         "map_type": ["homogeneous", "asymmeytic"],
     },
-    "half_11m_vs_full_9m": {
+    "half_11m_vs_full_7m": {
         "n_agents": 11,
-        "n_enemies": 9,
+        "n_enemies": 7,
         "limit": 120,
         "a_race": "T",
         "b_race": "T",
@@ -274,9 +274,9 @@ map_param_registry = {
         "map_content": "marines",
         "map_type": ["homogeneous", "asymmeytic"],
     },
-    "half_17m_vs_full_15m": {
+    "half_17m_vs_full_11m": {
         "n_agents": 17,
-        "n_enemies": 15,
+        "n_enemies": 11,
         "limit": 150,
         "a_race": "T",
         "b_race": "T",
