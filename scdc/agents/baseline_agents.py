@@ -152,6 +152,7 @@ class Kiting():
     Kiting is only tested on 3s_vs_3z, 3s_vs_4z, 3s_vs_5z
     '''
     def __init__(self, n_agents, env, consuctive_attack_count=7):
+        assert env.map_name in {'3s_vs_3z', '3s_vs_4z', '3s_vs_5z'}, "Kiting trick only works for 3s_vs_3z, 3s_vs_4z, 3s_vs_5z maps."
         self.n_agents = n_agents 
         self.env = env
         self.distination_point = 0
@@ -238,5 +239,52 @@ class Positioning():
 
 
 class WallOff():
-    # TODO: Implement wall off trick
-    pass
+    def __init__(self, n_agents, env):
+        assert env.map_name == 'corridor', "WallOff trick only works for corridor maps."
+        self.n_agents = n_agents 
+        self.env = env
+        self.destination_point = (9.5, 9.5) # this one is hard-coded 
+        self.arrival = False 
+        
+    def step(self, obs, state):
+        actions = []
+        if self.arrival:
+            actions = self.find_close_k()
+            reward, terminated, _ = self.env.step(actions)
+            return reward, terminated      
+            
+        center_x, center_y = self.env.get_ally_center()
+        if self.env.distance(center_x, center_y, self.destination_point[0], self.destination_point[1]) < 2:
+            self.arrival = True
+            actions = self.find_close_k()
+        else:
+            if center_x > center_y:
+                actions = [5]*self.n_agents
+            else:
+                actions = [3]*self.n_agents
+                
+        
+        
+        reward, terminated, _ = self.env.step(actions)
+        return reward, terminated      
+    
+    
+    def find_close_k(self):
+        e_id_arr = []
+        target_items = self.env.enemies.items()
+        for agent_id in range(self.n_agents):
+            
+            unit = self.env.get_unit_by_id(agent_id)
+            min_dist = math.hypot(self.env.max_distance_x, self.env.max_distance_y)
+            min_dist_id = None
+            
+            for t_id, t_unit in target_items: # t_id starts from 0
+                if t_unit.health > 0:
+                    dist = self.env.distance(unit.pos.x, unit.pos.y, t_unit.pos.x, t_unit.pos.y)
+                    if dist < min_dist:
+                        min_dist = dist
+                        min_dist_id = t_id 
+            
+            e_id_arr.append(min_dist_id+6)
+        
+        return e_id_arr

@@ -5,13 +5,13 @@ import argparse
 
 
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
-parser.add_argument('--map_name', default='3s_vs_3z', help='The name of the map. The full list can be found by running bin/map_list.')
+parser.add_argument('--map_name', default='corridor', help='The name of the map. The full list can be found by running bin/map_list.')
 parser.add_argument('--step_mul', default=2, type=int, help='How many game steps per agent step (default is 8). None indicates to use the default map step_mul..')
 parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "7").')
 parser.add_argument('--reward_sparse', default=False, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=1, type=int, help='Number of episodes the game will run for.')
-parser.add_argument('--agent', default="Kiting", type=str, help='Number of episodes the game will run for.')
+parser.add_argument('--agent', default="WallOff", type=str, help='Number of episodes the game will run for.')
 parser.add_argument('--alpha', default=1, type=int, help='Parameter used for calculating score in HybridAttack.')
 
 args = parser.parse_args()
