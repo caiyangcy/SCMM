@@ -18,7 +18,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * [StarCraft II Build Order Optimization using Deep Reinforcement Learning and Monte-Carlo Tree Search](https://arxiv.org/pdf/2006.10525.pdf)
 * [QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning](https://arxiv.org/pdf/1803.11485.pdf)
 * [Efficient Communication in Multi-AgentReinforcement Learning via Variance Based Control](https://papers.nips.cc/paper/8586-efficient-communication-in-multi-agent-reinforcement-learning-via-variance-based-control.pdf)
-* [Deep Multi-Agent Reinforcement Learning forDecentralised Continuous Cooperative Control](https://arxiv.org/pdf/2003.06709.pdf)
+* [Deep Multi-Agent Reinforcement Learning for Decentralised Continuous Cooperative Control](https://arxiv.org/pdf/2003.06709.pdf)
 * [Episodic Exploration for Deep Deterministic Policies: An Application to StarCraft Micromanagement Tasks](https://arxiv.org/pdf/1609.02993v3.pdf)
 * [Deep Coordination Graphs](https://arxiv.org/pdf/1910.00091.pdf)
 * [The StarCraft Multi-Agent Challenge](https://arxiv.org/pdf/1902.04043.pdf)
