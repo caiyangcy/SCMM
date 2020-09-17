@@ -138,14 +138,75 @@ class HybridAttack():
         
 class AlternatingFire():
     def __init__(self, n_agents, env):
-        assert n_agents > 1, "AlternatingFire doesn't support agents less than 2."
+        assert env.map_name in {'2m_vs_1z', '2s_vs_1sc'}, "Alternating Fire trick only supports 2m_vs_1z and 2s_vs_1sc map"
         self.n_agents = n_agents 
         self.env = env
+        self.attacking_agent = np.random.randint(0, 2)
+        self.attack_count = 2
+        self.init = True
+        self.map = env.map_name 
         
     def step(self, obs, state):
-        pass
-    
-    
+        if self.map == '2m_vs_1z':
+            a1, a2 = self.env.get_unit_by_id(0), self.env.get_unit_by_id(1)
+
+            _, e_unit = list(self.env.enemies.items())[0]                
+            e_to_a1 =  self.env.distance(a1.pos.x, a1.pos.y, e_unit.pos.x, e_unit.pos.y)
+            e_to_a2 =  self.env.distance(a2.pos.x, a2.pos.y, e_unit.pos.x, e_unit.pos.y)
+            
+            a_shoot_range = self.env.unit_shoot_range(a1)
+            min_dist = 1
+            
+            if e_to_a1 > a_shoot_range and e_to_a2 > a_shoot_range:        
+                actions = [1, 1]
+            else:
+                # The further one should fire
+                if e_to_a1 > min_dist and e_to_a2 > min_dist and self.init:
+                    self.init = False
+                    if e_to_a1 <= e_to_a2:
+                        # a1 closer and it fires
+                        actions = [6, 1]
+                    else:
+                        actions = [1, 6]
+                else:
+                    if e_to_a1 <= min_dist:
+                        actions = [1, 6]
+                    elif e_to_a2 <= 1:
+                        actions = [6, 1]
+                    else:
+                        if e_to_a1 >= e_to_a2:
+                            # close one fire to attract
+                            actions = [6, 1] #[1, 6]
+                        else:
+                            actions = [1, 6] #[6, 1]
+            reward, terminated, _ = self.env.step(actions)
+            return reward, terminated 
+        else:
+            a1, a2 = self.env.get_unit_by_id(0), self.env.get_unit_by_id(1)
+
+            _, e_unit = list(self.env.enemies.items())[0]                
+            e_to_a1 =  self.env.distance(a1.pos.x, a1.pos.y, e_unit.pos.x, e_unit.pos.y)
+            e_to_a2 =  self.env.distance(a2.pos.x, a2.pos.y, e_unit.pos.x, e_unit.pos.y)
+            
+            actions = []
+            if a1.shield < 30:
+                if e_to_a1 < 9:
+                    actions.append(3)
+                else:
+                    actions.append(1)
+            else:
+                actions.append(6)
+                
+            if a2.shield < 30:
+                if e_to_a2 < 9:
+                    actions.append(3)
+                else:
+                    actions.append(1)
+            else:
+                actions.append(6)
+
+            reward, terminated, _ = self.env.step(actions)
+            return reward, terminated 
 
 class Kiting():
     '''
@@ -283,28 +344,6 @@ class Positioning():
                 else:
                     actions.append(1)
         else:
-            # y_thres = 13
-            # actions = []
-            # e_center_x, e_center_y = self.env.get_enermy_center()
-            # y1, y2 = self.env.get_unit_by_id(0).pos.y, self.env.get_unit_by_id(1).pos.y
-            # if e_center_y <= y_thres:
-            #     if y1 >= y_thres and y2 >= y_thres: # likely to be on the bridge
-            #         # find close and attack
-            #         for i in range(self.n_agents):
-            #             unit = self.env.get_unit_by_id(i)
-            #             close_e_dist, close_e_id = self.find_close(unit)
-            #             actions.append(close_e_id+6)
-            #     else:
-            #         actions = [2, 2]
-            # else:
-            #     if y1 < y_thres and y2 < y_thres: # likely to be on the plane
-            #         # find close and attack
-            #         for i in range(self.n_agents):
-            #             unit = self.env.get_unit_by_id(i)
-            #             close_e_dist, close_e_id = self.find_close(unit)
-            #             actions.append(close_e_id+6)
-            #     else:
-            #         actions = [3, 3]
             y_thres = 12.5
             actions = []
             e_center_x, e_center_y = self.env.get_enermy_center()
@@ -319,26 +358,17 @@ class Positioning():
                         e_higher_than_y += 1
             
             y1, y2 = self.env.get_unit_by_id(0).pos.y, self.env.get_unit_by_id(1).pos.y
-            print()
-            print('y1: {} y2: {}'.format(y1, y2))
-            # assert False
-            print('e_higher_than_y: ', e_higher_than_y)
-            print('e_total: ', e_total)
-            print('thres: ', e_total*0.8)
             
             if e_higher_than_y <= e_total*0.7:
                 if y1 >= 14 and y2 >= 14: # likely to be on the bridge
                     # find close and attack
-                    print('bridge attack')
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
                         actions.append(close_e_id+6)
                 elif e_higher_than_y >= e_total*0.4:
-                    print('bridge move')
                     actions = [2, 2]
                 else:
-                    print('bridge attack')
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
@@ -347,13 +377,11 @@ class Positioning():
             elif e_higher_than_y > e_total*0.7:
                 if y1 < 11 and y2 < 11: # likely to be on the plane
                     # find close and attack
-                    print('plane attack')
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
                         actions.append(close_e_id+6)
                 else:
-                    print('plane move')
                     actions = [3, 3]
             
             print()
@@ -454,7 +482,7 @@ class Positioning():
         target_items = self.env.enemies.items()
 
         min_dist = math.hypot(self.env.max_distance_x, self.env.max_distance_y)
-        mind_e_id = None
+        min_e_id = None
         for t_id, t_unit in target_items: # t_id starts from 0
             if t_unit.health > 0:
                 dist = self.env.distance(unit.pos.x, unit.pos.y, t_unit.pos.x, t_unit.pos.y)

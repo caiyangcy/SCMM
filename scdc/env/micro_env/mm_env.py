@@ -47,8 +47,11 @@ actions = {
     "attack": 23,  # target: PointOrUnit
     "stop": 4,  # target: None
     "heal": 386,  # Unit
+    "patrol": 17,
 }
 
+# Refer to https://github.com/Blizzard/s2client-api/blob/master/include/sc2api/sc2_typeenums.h
+# for detailed ID list of actions
 
 class Direction(enum.IntEnum):
     NORTH = 0
