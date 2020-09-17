@@ -1,5 +1,3 @@
-from scdc.agents.base_agent import BaseAgent
-# import base_agent
 from scdc.env.micro_env.mm_env import MMEnv, Direction
 import time
 import numpy as np
@@ -12,7 +10,7 @@ class FocusFire():
         self.env = env
         self.no_over_kill = no_over_kill
         
-    def step(self, obs, state):                    
+    def step(self):                    
        
         if self.no_over_kill:
             actions = self.find_focus_targets()
@@ -105,7 +103,7 @@ class HybridAttack():
         return alpha*health+(1-alpha)*distance 
     
     
-    def step(self, obs, state):
+    def step(self):
         actions = []        
         target_items = self.env.enemies.items()
 
@@ -146,7 +144,7 @@ class AlternatingFire():
         self.init = True
         self.map = env.map_name 
         
-    def step(self, obs, state):
+    def step(self):
         if self.map == '2m_vs_1z':
             a1, a2 = self.env.get_unit_by_id(0), self.env.get_unit_by_id(1)
 
@@ -222,7 +220,7 @@ class Kiting():
         self.consuctive_attack_count = consuctive_attack_count
         self.ready_for_attack = False
     
-    def step(self, obs, state):
+    def step(self):
         closest_e_id, close_e_unit, closest_dist, move_direction = self.find_closest()
         actions = []
         for agent_id in range(self.n_agents):
@@ -305,7 +303,7 @@ class Positioning():
         self.map_name = env.map_name
         self.in_position = False
         
-    def step(self, obs, state):
+    def step(self):
         if self.map_name == 'bane_vs_bane':
             if self.in_position:
                 actions = self.find_close_k()
@@ -502,7 +500,7 @@ class WallOff():
         self.destination_point = (9, 9) # this one is hard-coded 
         self.arrival = False 
         
-    def step(self, obs, state):
+    def step(self):
         actions = []
         if self.arrival:
             actions = self.find_close_k()

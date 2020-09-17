@@ -12,7 +12,7 @@ parser.add_argument('--reward_sparse', default=True, help='Receive 1/-1 reward f
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=1, type=int, help='Number of episodes the game will run for.')
 parser.add_argument('--agent', default="AlternatingFire", type=str, help='Number of episodes the game will run for.')
-parser.add_argument('--alpha', default=1, type=int, help='Parameter used for calculating score in HybridAttack.')
+parser.add_argument('--alpha', default=0.5, type=int, help='Parameter used for calculating score in HybridAttack.')
 
 args = parser.parse_args()
         
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     n_agents = env_info["n_agents"]
     
     if args.agent == 'HybridAttack':
-        alpha = 0.5
+        alpha = args.alpha
         agent = globals()[args.agent](n_agents, env, alpha)
     else:
         agent = globals()[args.agent](n_agents, env)
@@ -45,10 +45,8 @@ if __name__ == "__main__":
         terminated = False
         
         while not terminated:
-            obs = agent.env.get_obs()
-            state = agent.env.get_state()
-            
-            reward, terminated  = agent.step(obs, state)
+
+            reward, terminated  = agent.step()
             episode_reward += reward 
             
         print("Total reward in episode {} = {}".format(e, episode_reward))

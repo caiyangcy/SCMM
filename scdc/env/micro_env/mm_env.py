@@ -94,10 +94,7 @@ class MMEnv(MultiAgentEnv):
         replay_prefix="",
         window_size_x=1920,
         window_size_y=1200,
-        heuristic_ai=False,
-        heuristic_rest=False,
         debug=False,
-        learning_agent=False
     ):
         """
         Create a StarCraftC2Env environment.
@@ -185,12 +182,6 @@ class MMEnv(MultiAgentEnv):
             The length of StarCraft II window size (default is 1920).
         window_size_y: int, optional
             The height of StarCraft II window size (default is 1200).
-        heuristic_ai: bool, optional
-            Whether or not to use a non-learning heuristic AI (default False).
-        heuristic_rest: bool, optional
-            At any moment, restrict the actions of the heuristic AI to be
-            chosen from actions available to RL agents (default is False).
-            Ignored if heuristic_ai == False.
         debug: bool, optional
             Log messages about observations, state, actions and rewards for
             debugging purposes (default is False).
@@ -234,8 +225,6 @@ class MMEnv(MultiAgentEnv):
         self.game_version = game_version
         self.continuing_episode = continuing_episode
         self._seed = seed
-        self.heuristic_ai = heuristic_ai
-        self.heuristic_rest = heuristic_rest
         self.debug = debug
         self.window_size = (window_size_x, window_size_y)
         self.replay_dir = replay_dir
@@ -280,9 +269,7 @@ class MMEnv(MultiAgentEnv):
         self.hydralisk_id = self.zergling_id = self.baneling_id = 0
         self.stalker_id = self.colossus_id = self.zealot_id = 0
         self.ghost_id = self.raven_id = 0
-        
-        self.has_learning_agent = learning_agent
-        
+                
         self.max_distance_x = 0
         self.max_distance_y = 0
         self.map_x = 0
@@ -340,12 +327,7 @@ class MMEnv(MultiAgentEnv):
         self.max_distance_y = map_play_area_max.y - map_play_area_min.y
         self.map_x = map_info.map_size.x
         self.map_y = map_info.map_size.y
-        # print('map_play_area_max.x: ', map_play_area_max.x)
-        # print('map_play_area_min.x: ', map_play_area_min.x)
-        # print('map_play_area_max.y: ', map_play_area_max.y)
-        # print('map_play_area_min.y: ', map_play_area_min.y)
-        # print('map_x: ', self.map_x)
-        # print('map_y: ', self.map_y)
+        
         if map_info.pathing_grid.bits_per_pixel == 1:
             vals = np.array(list(map_info.pathing_grid.data)).reshape(
                 self.map_x, int(self.map_y / 8))
@@ -381,9 +363,6 @@ class MMEnv(MultiAgentEnv):
         self.defeat_counted = False
 
         self.last_action = np.zeros((self.n_agents, self.n_actions))
-
-        if self.heuristic_ai:
-            self.heuristic_targets = [None] * self.n_agents
 
         try:
             self._obs = self._controller.observe()
@@ -426,11 +405,7 @@ class MMEnv(MultiAgentEnv):
             logging.debug("Actions".center(60, "-"))
 
         for a_id, action in enumerate(actions_int):
-            if not self.heuristic_ai:
-                sc_action = self.get_agent_action(a_id, action)
-            else:
-                sc_action, action_num = self.get_agent_action_heuristic(a_id, action)
-                actions[a_id] = action_num
+            sc_action = self.get_agent_action(a_id, action)
             if sc_action:
                 sc_actions.append(sc_action)
         
@@ -487,7 +462,7 @@ class MMEnv(MultiAgentEnv):
                 else:
                     reward = -1
             
-        elif self._episode_steps >= self.episode_limit and self.has_learning_agent:
+        elif self._episode_steps >= self.episode_limit:
             # Episode limit reached
             terminated = True
             if self.continuing_episode:
@@ -602,103 +577,6 @@ class MMEnv(MultiAgentEnv):
 
         sc_action = sc_pb.Action(action_raw=r_pb.ActionRaw(unit_command=cmd))
         return sc_action
-
-    def get_agent_action_heuristic(self, a_id, action):
-        unit = self.get_unit_by_id(a_id)
-        tag = unit.tag
-
-        target = self.heuristic_targets[a_id]
-        if unit.unit_type == self.medivac_id:
-            if (target is None or self.agents[target].health == 0 or
-                self.agents[target].health == self.agents[target].health_max):
-                min_dist = math.hypot(self.max_distance_x, self.max_distance_y)
-                min_id = -1
-                for al_id, al_unit in self.agents.items():
-                    if al_unit.unit_type == self.medivac_id:
-                        continue
-                    if (al_unit.health != 0 and
-                        al_unit.health != al_unit.health_max):
-                        dist = self.distance(unit.pos.x, unit.pos.y,
-                                             al_unit.pos.x, al_unit.pos.y)
-                        if dist < min_dist:
-                            min_dist = dist
-                            min_id = al_id
-                self.heuristic_targets[a_id] = min_id
-                if min_id == -1:
-                    self.heuristic_targets[a_id] = None
-                    return None, 0
-            action_id = actions['heal']
-            target_tag = self.agents[self.heuristic_targets[a_id]].tag
-        else:
-            if target is None or self.enemies[target].health == 0:
-                min_dist = math.hypot(self.max_distance_x, self.max_distance_y)
-                min_id = -1
-                for e_id, e_unit in self.enemies.items():
-                    if (unit.unit_type == self.marauder_id and
-                        e_unit.unit_type == self.medivac_id):
-                        continue
-                    if e_unit.health > 0:
-                        dist = self.distance(unit.pos.x, unit.pos.y,
-                                             e_unit.pos.x, e_unit.pos.y)
-                        if dist < min_dist:
-                            min_dist = dist
-                            min_id = e_id
-                self.heuristic_targets[a_id] = min_id
-                if min_id == -1:
-                    self.heuristic_targets[a_id] = None
-                    return None, 0
-            action_id = actions['attack']
-            target_tag = self.enemies[self.heuristic_targets[a_id]].tag
-
-        action_num = self.heuristic_targets[a_id] + self.n_actions_no_attack
-
-        # Check if the action is available
-        if (self.heuristic_rest and
-            self.get_avail_agent_actions(a_id)[action_num] == 0):
-
-            # Move towards the target rather than attacking/healing
-            if unit.unit_type == self.medivac_id:
-                target_unit = self.agents[self.heuristic_targets[a_id]]
-            else:
-                target_unit = self.enemies[self.heuristic_targets[a_id]]
-
-            delta_x = target_unit.pos.x - unit.pos.x
-            delta_y = target_unit.pos.y - unit.pos.y
-
-            if abs(delta_x) > abs(delta_y): # east or west
-                if delta_x > 0: # east
-                    target_pos=sc_common.Point2D(
-                        x=unit.pos.x + self._move_amount, y=unit.pos.y)
-                    action_num = 4
-                else: # west
-                    target_pos=sc_common.Point2D(
-                        x=unit.pos.x - self._move_amount, y=unit.pos.y)
-                    action_num = 5
-            else: # north or south
-                if delta_y > 0: # north
-                    target_pos=sc_common.Point2D(
-                        x=unit.pos.x, y=unit.pos.y + self._move_amount)
-                    action_num = 2
-                else: # south
-                    target_pos=sc_common.Point2D(
-                        x=unit.pos.x, y=unit.pos.y - self._move_amount)
-                    action_num = 3
-
-            cmd = r_pb.ActionRawUnitCommand(
-                ability_id = actions['move'],
-                target_world_space_pos = target_pos,
-                unit_tags = [tag],
-                queue_command = False)
-        else:
-            # Attack/heal the target
-            cmd = r_pb.ActionRawUnitCommand(
-                ability_id = action_id,
-                target_unit_tag = target_tag,
-                unit_tags = [tag],
-                queue_command = False)
-
-        sc_action = sc_pb.Action(action_raw=r_pb.ActionRaw(unit_command=cmd))
-        return sc_action, action_num
 
     def reward_battle(self):
         """Reward function when self.reward_spare==False.
@@ -1625,7 +1503,6 @@ class MMEnv(MultiAgentEnv):
         stats = {
             "battles_won": self.battles_won,
             "battles_game": self.battles_game,
-            "battles_draw": self.timeouts,
             "win_rate": self.battles_won / self.battles_game,
             "timeouts": self.timeouts,
             "restarts": self.force_restarts,
