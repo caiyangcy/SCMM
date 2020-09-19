@@ -799,6 +799,21 @@ class MMEnv(MultiAgentEnv):
         
         return center_x, center_y 
         
+    def count_alive_units(self, kind='ally'):
+        count = 0
+        if kind == 'ally':
+            for agent_id in range(self.n_agents):
+                unit = self.get_unit_by_id(agent_id) 
+                count += unit.health > 0
+        elif kind == 'enermy':
+            target_items = self.enemies.items()
+            for t_id, t_unit in target_items: # t_id starts from 0
+                count += t_unit.health > 0
+        else:
+            raise NotImplementedError()
+            
+        return count
+    
     def check_bounds(self, x, y):
         """Whether a point is within the map bounds."""
         return (0 <= x < self.map_x and 0 <= y < self.map_y)
