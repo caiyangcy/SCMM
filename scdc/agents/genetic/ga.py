@@ -1,4 +1,4 @@
-from scdc.env.micro_env.mm_env import MMEnv, Direction
+from scdc.env.micro_env.mm_env import MMEnv
 import time
 import numpy as np
 import argparse

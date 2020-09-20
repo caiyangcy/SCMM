@@ -6,7 +6,7 @@ from pysc2.maps import lib
 
 
 class MM_Map(lib.Map): # MM_Maps stands for Micro-Management Maps
-    directory = "Micro_Maps"
+    directory = "micro_maps"
     download = "https://github.com/oxwhirl/smac#smac-maps"
     players = 2
     step_mul = 8
