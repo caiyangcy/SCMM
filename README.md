@@ -28,6 +28,15 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 * [Neuroevolution for RTS Micro](https://arxiv.org/pdf/1803.10288.pdf)
 * [Real-time challenge balance in an RTS game using rtNEAT](https://www.csse.uwa.edu.au/cig08/Proceedings/papers/8023.pdf)
 * [Neuroevolution Based Multi-Agent System with Ontology Based Template Creation for Micromanagement in Real-Time Strategy Games](https://pdfs.semanticscholar.org/0197/8064174712b42f5c14c01afcba30a736bbfd.pdf)
+* [Potential-Field-Based Unit Behavior Optimization for Balancing in StarCraft II](https://dl.acm.org/doi/pdf/10.1145/2739482.2764643)
+* [Comparing Three Approaches to Micro in RTS Games](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8790308&tag=1)
+* [Attentive Relational State Representation in Decentralized Multiagent Reinforcement Learning](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9049415&tag=1)
+* [Spellcaster Control Agent in StarCraft II Using Deep Reinforcement Learning]()
+* [Learning to Select Actions in StarCraft with Genetic Algorithms](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7880180&tag=1)
+* [Comparing Three Approaches to Micro in RTS Games](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8790308&tag=1)
+* [Neuroevolution for RTS Micro](https://arxiv.org/pdf/1803.10288.pdf)
+* [Neuroevolution Based Multi-Agent System with Ontology Based Template Creation for Micromanagement in Real-Time Strategy Games](https://pdfs.semanticscholar.org/0197/8064174712b42f5c14c01afcba30a736bbfd.pdf)
+* [Evolving Neural Networks through Augmenting Topologies](https://dl.acm.org/doi/pdf/10.1162/106365602320169811)
 
 ## Thesis
 * [Heuristic Search Techniques for Real-Time Strategy Games](http://www.cs.mun.ca/~dchurchill/pdf/DavidChurchill_phd_thesis.pdf)
