@@ -5,28 +5,33 @@ import argparse
 import math
 
 class HybridAttack():
-    def __init__(self, n_agents, env, alpha):
+    def __init__(self, n_agents, alpha):
         self.n_agents = n_agents
-        self.env = env
         self.alpha = alpha 
         
+    def fit(self, env):
+        self.env = env 
+        self.n_actions_no_attack = self.env.n_actions_no_attack
         
     def _calculate_score(self, alpha, health, distance):
         return alpha*health+(1-alpha)*distance 
     
     
-    def step(self):
+    def step(self, adv_plot=False):
         actions = []        
         target_items = self.env.enemies.items()
 
         for agent_id in range(self.n_agents):
             unit = self.env.get_unit_by_id(agent_id)
             min_score_e_id = self.find_lowest_score(unit, target_items)
-            action = 6+min_score_e_id
+            action = self.n_actions_no_attack+min_score_e_id
                 
             actions.append(action)
 
         reward, terminated, _ = self.env.step(actions)
+        
+        if adv_plot:
+            return actions, reward, terminated 
         
         return reward, terminated 
         

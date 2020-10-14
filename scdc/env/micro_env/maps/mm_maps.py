@@ -154,6 +154,18 @@ map_param_registry = {
         "map_content": "stalkers",
         "map_type": ["heterogeneous", "asymmeytic"],
     },
+
+    "3s_vs_3z_medium": {
+        "n_agents": 3,
+        "n_enemies": 3,
+        "limit": 150,
+        "a_race": "P",
+        "b_race": "P",
+        "unit_type_bits": 0,
+        "map_content": "stalkers",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    },
+    
     "3s_vs_4z": {
         "n_agents": 3,
         "n_enemies": 4,
@@ -164,6 +176,18 @@ map_param_registry = {
         "map_content": "stalkers",
         "map_type": ["heterogeneous", "asymmeytic"],
     },
+    
+    "3s_vs_4z_medium": {
+        "n_agents": 3,
+        "n_enemies": 4,
+        "limit": 150,
+        "a_race": "P",
+        "b_race": "P",
+        "unit_type_bits": 0,
+        "map_content": "stalkers",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    },
+    
     "3s_vs_5z": {
         "n_agents": 3,
         "n_enemies": 5,
@@ -174,6 +198,18 @@ map_param_registry = {
         "map_content": "stalkers",
         "map_type": ["heterogeneous", "asymmeytic"],
     },
+    
+    "3s_vs_5z_medium": {
+        "n_agents": 3,
+        "n_enemies": 5,
+        "limit": 150,
+        "a_race": "P",
+        "b_race": "P",
+        "unit_type_bits": 0,
+        "map_content": "stalkers",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    },
+    
     "1c3s5z": {
         "n_agents": 9,
         "n_enemies": 9,
@@ -304,6 +340,47 @@ map_param_registry = {
         "map_content": "marines_and_ghosts",
         "map_type": ["heterogeneous", "asymmeytic"],
     },
+    "6s4z_vs_10b30z": {
+        "n_agents": 10,
+        "n_enemies": 40,
+        "limit": 130,
+        "a_race": "P",
+        "b_race": "Z",
+        "unit_type_bits": 2,
+        "map_content": "stalkers_zealots_and_zergs",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    },
+    "10z5b_vs_2z3s": {
+        "n_agents": 15,
+        "n_enemies": 5,
+        "limit": 130,
+        "a_race": "Z",
+        "b_race": "Z",
+        "unit_type_bits": 2,
+        "map_content": "zergs_and_banes",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    },
+    "1s3m_vs_5m": {
+        "n_agents": 4,
+        "n_enemies": 5,
+        "limit": 130,
+        "a_race": "T",
+        "b_race": "T",
+        "unit_type_bits": 2,
+        "map_content": "siege_and_marines",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    }, 
+    "6s1s_vs_10r": {
+        "n_agents": 7,
+        "n_enemies": 10,
+        "limit": 130,
+        "a_race": "T",
+        "b_race": "T",
+        "unit_type_bits": 2,
+        "map_content": "sentry_and_stalkers",
+        "map_type": ["heterogeneous", "asymmeytic"],
+    }, 
+    
 }
 
 

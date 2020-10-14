@@ -45,7 +45,7 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 
 To get started:
 
-    python -m scdc.agents.agent_demo
+    python -m scdc.agents.scripted..agent_demo
     
 # Acknowledgement
-* The coding is based on [SMAC](https://github.com/oxwhirl/smac)
+* The coding is based on [SMAC](https://github.com/oxwhirl/smac). Refer to the repo for details and license.

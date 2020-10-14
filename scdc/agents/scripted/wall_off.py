@@ -8,12 +8,15 @@ class WallOff():
     '''
     hard-coded
     '''
-    def __init__(self, n_agents, env):
-        assert env.map_name == 'corridor', "WallOff trick only works for corridor maps."
+    def __init__(self, n_agents):
         self.n_agents = n_agents 
-        self.env = env
         self.destination_point = (9, 9) # this one is hard-coded 
         self.arrival = False 
+        
+    def fit(self, env):
+        assert env.map_name == 'corridor', "WallOff trick only works for corridor maps."
+        self.env = env
+        self.n_actions_no_attack = self.env.n_actions_no_attack
         
     def step(self):
         actions = []
@@ -53,6 +56,6 @@ class WallOff():
                         min_dist = dist
                         min_dist_id = t_id 
             
-            e_id_arr.append(min_dist_id+6)
+            e_id_arr.append(min_dist_id+self.n_actions_no_attack)
         
         return e_id_arr

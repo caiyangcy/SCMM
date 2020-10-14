@@ -8,12 +8,17 @@ class Positioning():
     '''
     hard-coded
     '''
-    def __init__(self, n_agents, env):
-        assert env.map_name in {'bane_vs_bane', 'so_many_baneling', '2c_vs_64zg'}, "Not supported map"
+    def __init__(self, n_agents):
         self.n_agents = n_agents 
-        self.env = env
-        self.map_name = env.map_name
         self.in_position = False
+        
+        
+    def fit(self, env):
+        assert env.map_name in {'bane_vs_bane', 'so_many_baneling', '2c_vs_64zg'}, "Not supported map"
+        self.env = env 
+        self.map_name = env.map_name
+        self.n_actions_no_attack = self.env.n_actions_no_attack
+        
         
     def step(self):
         if self.map_name == 'bane_vs_bane':
@@ -33,7 +38,7 @@ class Positioning():
                     if self.env.distance(unit.pos.x, unit.pos.y, spread_points[i][0], spread_points[i][1]) < 0.5:
                         close_e_dist, close_e_id = self.find_close(unit)
                         if close_e_dist <= self.env.unit_shoot_range(unit):
-                            actions.append(close_e_id+6)
+                            actions.append(close_e_id+self.n_actions_no_attack)
                         else:
                             actions.append(1)
                     else:
@@ -75,14 +80,14 @@ class Positioning():
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
-                        actions.append(close_e_id+6)
+                        actions.append(close_e_id+self.n_actions_no_attack)
                 elif e_higher_than_y >= e_total*0.4:
                     actions = [2, 2]
                 else:
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
-                        actions.append(close_e_id+6)
+                        actions.append(close_e_id+self.n_actions_no_attack)
                         
             elif e_higher_than_y > e_total*0.7:
                 if y1 < 11 and y2 < 11: # likely to be on the plane
@@ -90,7 +95,7 @@ class Positioning():
                     for i in range(self.n_agents):
                         unit = self.env.get_unit_by_id(i)
                         close_e_dist, close_e_id = self.find_close(unit)
-                        actions.append(close_e_id+6)
+                        actions.append(close_e_id+self.n_actions_no_attack)
                 else:
                     actions = [3, 3]
             
@@ -184,7 +189,7 @@ class Positioning():
                         min_dist = dist
                         min_dist_id = t_id 
             
-            e_id_arr.append(min_dist_id+6)
+            e_id_arr.append(min_dist_id+self.n_actions_no_attack)
         
         return e_id_arr
     

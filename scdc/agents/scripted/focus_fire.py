@@ -5,18 +5,21 @@ import argparse
 import math
 
 class FocusFire():
-    def __init__(self, n_agents, env, no_over_kill=False):
+    def __init__(self, n_agents, no_over_kill=False):
         self.n_agents = n_agents 
-        self.env = env
         self.no_over_kill = no_over_kill
         
-    def step(self):                    
+    def fit(self, env):
+        self.env = env
+        self.n_actions_no_attack = self.env.n_actions_no_attack
+        
+    def step(self, plot_level):                    
        
         if self.no_over_kill:
             actions = self.find_focus_targets()
         else:
             all_closest_id = self.find_closest()
-            actions = [6+all_closest_id]*self.n_agents
+            actions = [self.n_actions_no_attack+all_closest_id]*self.n_agents
             
         reward, terminated, _ = self.env.step(actions)
         return reward, terminated 

@@ -5,16 +5,19 @@ import argparse
 import math
 
 class AlternatingFire():
-    def __init__(self, n_agents, env):
-        assert env.map_name in {'2m_vs_1z', '2s_vs_1sc'}, "Alternating Fire trick only supports 2m_vs_1z and 2s_vs_1sc map"
+    def __init__(self, n_agents):
         self.n_agents = n_agents 
-        self.env = env
         self.attacking_agent = np.random.randint(0, 2)
         self.attack_count = 2
         self.init = True
-        self.map = env.map_name 
         
-    def step(self):
+    def fit(self, env):
+        assert env.map_name in {'2m_vs_1z', '2s_vs_1sc'}, "Alternating Fire trick only supports 2m_vs_1z and 2s_vs_1sc map"
+        self.env = env
+        self.n_actions_no_attack = self.env.n_actions_no_attack
+        self.map = env.map_name 
+    
+    def step(self, plot_level):
         if self.map == '2m_vs_1z':
             a1, a2 = self.env.get_unit_by_id(0), self.env.get_unit_by_id(1)
 
@@ -33,22 +36,27 @@ class AlternatingFire():
                     self.init = False
                     if e_to_a1 <= e_to_a2:
                         # a1 closer and it fires
-                        actions = [6, 1]
+                        actions = [self.n_actions_no_attack, 1]
                     else:
-                        actions = [1, 6]
+                        actions = [1, self.n_actions_no_attack]
                 else:
                     if e_to_a1 <= min_dist:
-                        actions = [1, 6]
+                        actions = [1, self.n_actions_no_attack]
                     elif e_to_a2 <= 1:
-                        actions = [6, 1]
+                        actions = [self.n_actions_no_attack, 1]
                     else:
                         if e_to_a1 >= e_to_a2:
                             # close one fire to attract
-                            actions = [6, 1] #[1, 6]
+                            actions = [self.n_actions_no_attack, 1] 
                         else:
-                            actions = [1, 6] #[6, 1]
+                            actions = [1, self.n_actions_no_attack] 
+                            
             reward, terminated, _ = self.env.step(actions)
+            
+            if plot_level > 0:
+                return actions, reward, terminated 
             return reward, terminated 
+    
         else:
             a1, a2 = self.env.get_unit_by_id(0), self.env.get_unit_by_id(1)
 
@@ -63,7 +71,7 @@ class AlternatingFire():
                 else:
                     actions.append(1)
             else:
-                actions.append(6)
+                actions.append(self.n_actions_no_attack)
                 
             if a2.shield < 30:
                 if e_to_a2 < 9:
@@ -71,7 +79,11 @@ class AlternatingFire():
                 else:
                     actions.append(1)
             else:
-                actions.append(6)
+                actions.append(self.n_actions_no_attack)
+
 
             reward, terminated, _ = self.env.step(actions)
+            
+            if plot_level > 0:
+                return actions, reward, terminated 
             return reward, terminated 
