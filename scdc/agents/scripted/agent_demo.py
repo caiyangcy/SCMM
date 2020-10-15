@@ -1,4 +1,3 @@
-# from scdc.agents.scripted import *
 from scdc.agents.scripted.alternating_fire import AlternatingFire
 from scdc.agents.scripted.hybrid_attack import HybridAttack
 from scdc.agents.scripted.focus_fire import FocusFire
@@ -6,19 +5,15 @@ from scdc.agents.scripted.kiting import Kiting
 from scdc.agents.scripted.positioning import Positioning
 from scdc.agents.scripted.wall_off import WallOff
 from scdc.agents.scripted.dying_retreat import DyingRetreat
-from scdc.agents.scripted.draw_fire import DrawAttack
 from scdc.agents.scripted.block_enemy import BlockEnemy
 
 from scdc.env.micro_env.mm_env import MMEnv
 from scdc.utils.game_show import game_show, game_show_adv
-import time
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
-import asyncio
 
 import sys
-import multiprocessing
 
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
 parser.add_argument('--map_name', default='1m', help='The name of the map. The full list can be found by running bin/map_list.')

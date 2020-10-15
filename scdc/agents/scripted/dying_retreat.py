@@ -1,9 +1,5 @@
-from scdc.env.micro_env.mm_env import MMEnv, Direction
 from scdc.utils.game_utils import get_opposite_direction, fine_closest_position
-import time
 import numpy as np
-import argparse
-import math
 
 class DyingRetreat():
     def __init__(self, n_agents, hp_thres=0.2, use_accum=True, dying_factor=1, consective_move=2):

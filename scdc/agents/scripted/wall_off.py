@@ -1,7 +1,3 @@
-from scdc.env.micro_env.mm_env import MMEnv, Direction
-import time
-import numpy as np
-import argparse
 import math
 
 class WallOff():

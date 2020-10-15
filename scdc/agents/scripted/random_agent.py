@@ -4,7 +4,6 @@ Created on Tue Aug 25 22:27:05 2020
 
 @author: Cai
 """
-from scdc.agents.base_agent import BaseAgent
 from scdc.env.micro_env.mm_env import MMEnv
 import time
 import numpy as np
@@ -18,9 +17,6 @@ class RandomAgents():
         self.env = env
     
     def step(self, obs, state):
-        # obs. state should be returned by env
-        # super(RandomAgents, self).step(obs)
-        # time.sleep(0.5)
 
         actions = []
         for agent_id in range(self.n_agents):

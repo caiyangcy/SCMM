@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="SC2MM", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="Cai Yang",
     author_email="u6625166@anu.edu.au",
     description="A package for StarCraft2 Micro-Management.",
