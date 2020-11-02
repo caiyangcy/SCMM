@@ -52,9 +52,23 @@ A collection of helpful papers for SC2 decentralized control, mainly focused on:
 
 # Run
 
-To get started:
+Refer to the names of agents to find out the details of running agents.
 
-    python -m scdc.agents.scripted.agent_demo
+## Scripted
+
+    python -m scmm.agents.scripted.agent_demo -n_episode=10 -map_name=3m -difficulty=7 -plot_level=0 -agent=FocusFire
     
+## Genetic
+    
+    python -m scmm.agents.genetic.ga -n_episode=10 -map_name=8m -difficulty=7 -plot_level=0 
+    
+## NN
+
+    python -m scmm.agents.nn.nn -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+    
+## Potential Field
+
+    python -m scmm.agents.potential_fields.forces -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+
 # Acknowledgement
 * The coding is based on [SMAC](https://github.com/oxwhirl/smac). Refer to the repo for details and license.
