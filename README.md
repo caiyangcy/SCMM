@@ -1,54 +1,94 @@
-# SC2DC
-# StarCraft 2 Decentralized Control
+# SCMM StarCraft II Micro Management
 
-A collection of helpful papers for SC2 decentralized control, mainly focused on:
-* Micro Management
-* Communication
-* Planning
-* Cooperation
-* Coordination
+# Installing StarCraft II
+You can find lastest verson of StarCraft II at *[here](https://starcraft2.com/en-us/)
 
-## Review Paper
-* [Multi-Agent Reinforcement Learning: A Selective Overview of Theories and Algorithms](https://arxiv.org/pdf/1911.10635.pdf)
-* [A Survey of Real-Time Strategy Game AI Research and Competition in StarCraft](https://www.cs.mun.ca/~dchurchill/pdf/starcraft_survey.pdf)
+After installing the game, navigate to *installing_path/StarCraft II/Maps* and move a copy of all the maps in SCMM there.
 
-## Research Paper
+If *Maps* folder does not exist, then manually create one
 
-* [Mutiagent Bidirectionally-Coordinated Nets Emergence of Human-level Coordination in Learning to Play StarCraft Combat Games](https://arxiv.org/pdf/1703.10069.pdf)
-* [StarCraft II Build Order Optimization using Deep Reinforcement Learning and Monte-Carlo Tree Search](https://arxiv.org/pdf/2006.10525.pdf)
-* [QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning](https://arxiv.org/pdf/1803.11485.pdf)
-* [Efficient Communication in Multi-AgentReinforcement Learning via Variance Based Control](https://papers.nips.cc/paper/8586-efficient-communication-in-multi-agent-reinforcement-learning-via-variance-based-control.pdf)
-* [Deep Multi-Agent Reinforcement Learning for Decentralised Continuous Cooperative Control](https://arxiv.org/pdf/2003.06709.pdf)
-* [Episodic Exploration for Deep Deterministic Policies: An Application to StarCraft Micromanagement Tasks](https://arxiv.org/pdf/1609.02993v3.pdf)
-* [Deep Coordination Graphs](https://arxiv.org/pdf/1910.00091.pdf)
-* [The StarCraft Multi-Agent Challenge](https://arxiv.org/pdf/1902.04043.pdf)
-* [An Analysis of Model-Based Heuristic Search Techniques for StarCraft Combat Scenarios](https://pdfs.semanticscholar.org/376b/ff162fc0143642cc7fa7d3547eef48871b51.pdf)
-* [Multi-scale Bayesian modeling for RTS games: an application to StarCraft AI](https://hal.archives-ouvertes.fr/hal-01228961/document)
-* [Learning to Select Actions in Starcraft with Genetic Algorithms](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7880180)
-* [Neuroevolution for RTS Micro](https://arxiv.org/pdf/1803.10288.pdf)
-* [Real-time challenge balance in an RTS game using rtNEAT](https://www.csse.uwa.edu.au/cig08/Proceedings/papers/8023.pdf)
-* [Neuroevolution Based Multi-Agent System with Ontology Based Template Creation for Micromanagement in Real-Time Strategy Games](https://pdfs.semanticscholar.org/0197/8064174712b42f5c14c01afcba30a736bbfd.pdf)
-* [Potential-Field-Based Unit Behavior Optimization for Balancing in StarCraft II](https://dl.acm.org/doi/pdf/10.1145/2739482.2764643)
-* [Comparing Three Approaches to Micro in RTS Games](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=8790308&tag=1)
-* [Attentive Relational State Representation in Decentralized Multiagent Reinforcement Learning](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9049415&tag=1)
-* [Spellcaster Control Agent in StarCraft II Using Deep Reinforcement Learning]()
-* [Learning to Select Actions in StarCraft with Genetic Algorithms](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7880180&tag=1)
-* [Comparing Three Approaches to Micro in RTS Games](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8790308&tag=1)
-* [Neuroevolution for RTS Micro](https://arxiv.org/pdf/1803.10288.pdf)
-* [Neuroevolution Based Multi-Agent System with Ontology Based Template Creation for Micromanagement in Real-Time Strategy Games](https://pdfs.semanticscholar.org/0197/8064174712b42f5c14c01afcba30a736bbfd.pdf)
-* [Evolving Neural Networks through Augmenting Topologies](https://dl.acm.org/doi/pdf/10.1162/106365602320169811)
+# Installing SCMM
+Two ways:
 
-## Thesis
-* [Heuristic Search Techniques for Real-Time Strategy Games](http://www.cs.mun.ca/~dchurchill/pdf/DavidChurchill_phd_thesis.pdf)
+1. You can directly clone the repo:
 
-## Environment / Simulation / API
-* [pysc2](https://github.com/deepmind/pysc2)
-* [SparCraft](https://github.com/davechurchill/ualbertabot/wiki/SparCraft-Home)
-* [Brood War API](https://github.com/bwapi/bwapi)
-* [SMAC](https://github.com/oxwhirl/smac)
+        git clone https://github.com/caiyangcy/SC2DC.git
+    
+2. Use pip install:
 
-## Maps
+        pip install SC2MM
+
+
+# Maps
 * You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/docs/map_info.md)
+
+Alternatively, you can run:
+
+    python -m scmm.bin.map_list
+
+## View a Map
+
+All the maps can be viewed by StarCraft II Editor
+
+## Change a Map
+
+The terrain and functionality of a map can be changed by StarCraft II Editor
+
+## Create a Map
+
+Create a map using StarCraft II Editor. After creation, make sure add the map to *scmm/env/micro_env/maps/mm_maps.py* and also make sure the map is added to the game folder
+
+## Create an unit
+
+The most important thing when creating units on a new map is to disable some reactions of them. 
+
+To do this (taken from SMAC):
+
+        Open editor, data editor, unit tab
+        
+        Right click and click add new unit
+        
+        Name the new unit, click suggest right below it
+        
+        Leave the "parent:" row alone. That determines what we're making. We want to make a unit
+        
+        Select the unit you want to copy (bottom of the new opened window, "copy from" row) e.g. zealot if you're copying zealot
+        
+        Set the "Object family:," "Race:," and "Object Type:" as desired. THESE DO NOTHING but make it easier for you to find your new unit once it's made. e.g. you probably want a new zerg unit to be in the zerg section when you go to place it on your map or something.
+        
+        Press okay, you're almost done
+        
+        Click the plus sign on the data editor tabs, go to edit actor data, actors
+        
+        Click the new actors tab
+        
+        Right click and click add new actor
+        
+        Name it and click suggest like before
+        
+        Change the "Actor Type:" row to unit
+        
+        Select what you want to copy from (bottom of the new opened window again) e.g. zealot if you're coping a zealot
+        
+        Press okay
+        
+        Click on your new actor
+        
+        At the bottom right of the window where it says "Token" and then "Unit Name," change the unit name to the name of your unit e.g. Zealot RL
+        
+        Go back to the Unit tab, find the new unit and modify the following fields:
+        
+            (Basic) Stats: Supplies - 0
+            Combat: Default Acquire Level - Passive
+            Behaviour: Response - No Response
+
+
+## Unit Tester Map
+
+A unit tester map can be found at unit tester map folder. Source at *[unit-tester](https://www.sc2mapster.com/projects/unit-tester).
+
+The purpose of this map is to help design some new scenarios. 
+
 
 # Run
 
