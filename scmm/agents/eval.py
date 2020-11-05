@@ -45,9 +45,6 @@ n_episodes = 10
 
 for i, map_name in tqdm(enumerate(map_names)):
     
-    if i < 23:
-        continue
-    
     if map_name == '6m1r_vs_4g' or map_name == '12m2r_vs_7g':
         continue
     
@@ -62,7 +59,7 @@ for i, map_name in tqdm(enumerate(map_names)):
     
     alpha = 0
     
-    # agent = HybridAttackHeal(n_agents, alpha)
+    agent = HybridAttackHeal(n_agents, alpha)
     # agent = Kiting(n_agents, consuctive_attack_count=10)
     # agent = AlternatingFire(n_agents)
     # agent = FocusFire(n_agents)
@@ -75,8 +72,8 @@ for i, map_name in tqdm(enumerate(map_names)):
     
     
     for e in range(n_episodes):
-        # agent = FocusFire(n_agents, False)
-        agent = DyingRetreat(n_agents)
+        agent = FocusFire(n_agents, False)
+        # agent = DyingRetreat(n_agents)
         agent.fit(env)
         agent.env.reset()
             
@@ -107,9 +104,9 @@ for i, map_name in tqdm(enumerate(map_names)):
     
     # Title, Label, Ticks and Ylim
     ax.set_title(f'Dying Retreat - {map_name}', fontdict={'size':22})
-    ax.set(ylabel='Final Rewards', ylim=(0, 2))
-    ax.set(xlabel='Episode')
-    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right', fontsize=12)
-    fig.savefig(f"plots/DR_{map_name}.pdf")
+    ax.set(ylabel='Final Rewards', ylim=(0, 2), fontdict={'size':20})
+    ax.set(xlabel='Episode', fontdict={'size':20})
+    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right', fontsize=15)
+    fig.savefig(f"plots_new/DR_{map_name}.pdf")
     plt.close(fig)
     
