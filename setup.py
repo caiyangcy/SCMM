@@ -15,15 +15,15 @@ setuptools.setup(
     packages=[
         'scmm',
         'scmm.env',
-        'scmm.micro_env',
-        'scmm.micro_env.maps',
+        'scmm.env.micro_env',
+        'scmm.env.micro_env.maps',
         'scmm.bin',
         'scmm.agents',
         'scmm.agents.nn',
         'scmm.agents.genetic',
         'scmm.agents.potential_fields',
         'scmm.agents.scipted',
-        'scmm.untils'
+        'scmm.utils'
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
