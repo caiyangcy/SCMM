@@ -273,9 +273,16 @@ if __name__ == "__main__":
     plt.plot(np.arange(len(max_reward_change)), mean_reward_change, label='mean fitness')
     
     ax.set_title(f'GA - {map_name}', fontdict={'size':22})
-    ax.set(ylabel='Rewards', ylim=(0, 1.5))
-    ax.set(xlabel='Episode')
+    
+    ax.set_ylabel('Rewards', fontsize=20)
+    ax.set_ylim(0, 1.5)
+    ax.tick_params(axis='both', which='minor', labelsize=15)
+    ax.tick_params(axis='both', which='major', labelsize=15)
+
+    ax.set_xlabel('Episode', fontsize=20)
+    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right', fontsize=15)
+    
     plt.legend()
     plt.show()
-    fig.savefig(f"plots/new_ga_{map_name}.png")
+    fig.savefig(f"plots/ga_{map_name}.png")
     plt.close(fig)

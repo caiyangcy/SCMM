@@ -284,14 +284,14 @@ class MLP(nn.Module):
         
     
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
-parser.add_argument('--map_name', default='2m_vs_1z', type=str, help='The name of the map. The full list can be found by running bin/map_list.')
+parser.add_argument('--map_name', default='25m', type=str, help='The name of the map. The full list can be found by running bin/map_list.')
 parser.add_argument('--step_mul', default=2, type=int, help='How many game steps per agent step (default is 8). None indicates to use the default map step_mul..')
 parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "7").')
 parser.add_argument('--reward_sparse', default=False, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=10, type=int, help='Number of episodes the game will run for.')
 parser.add_argument('--evolve_low', default=0.99, type=float, help='Lower bound for weight change.')
-parser.add_argument('--evolve_low', default=1.01, type=float, help='Higher bound for weight change.')
+parser.add_argument('--evolve_high', default=1.01, type=float, help='Higher bound for weight change.')
 
 
 args = parser.parse_args()
@@ -319,11 +319,18 @@ if __name__ == "__main__":
     ax.plot(np.arange(len(max_rewards)), max_rewards, label='max reward')
     plt.plot(np.arange(len(min_rewards)), min_rewards, label='min reward')
     plt.plot(np.arange(len(mean_rewards)), mean_rewards, label='mean reward')
-        
+    
     ax.set_title(f'NN - {map_name}', fontdict={'size':22})
-    ax.set(ylabel='Rewards', ylim=(0, 1.2))
-    ax.set(xlabel='Episode')
+    
+    ax.set_ylabel('Rewards', fontsize=20)
+    ax.set_ylim(0, 1.5)
+    ax.tick_params(axis='both', which='minor', labelsize=15)
+    ax.tick_params(axis='both', which='major', labelsize=15)
+
+    ax.set_xlabel('Episode', fontsize=20)
+    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right', fontsize=15)
+    
     plt.legend()
     plt.show()
-    fig.savefig(f"nn_{map_name}.png")
+    fig.savefig(f"plots/nn_{map_name}.png")
     plt.close(fig)
