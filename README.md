@@ -1,7 +1,7 @@
 # SCMM StarCraft II Micro Management
 
 # Installing StarCraft II
-You can find lastest verson of StarCraft II at [here](https://starcraft2.com/en-us/)
+You can find lastest verson of StarCraft II [here](https://starcraft2.com/en-us/)
 
 After installing the game, navigate to `installing_path/StarCraft II/Maps` and move a copy of all the [maps](https://github.com/caiyangcy/SCMM/tree/master/maps) in SCMM there.
 
