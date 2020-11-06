@@ -11,7 +11,7 @@ If `Maps` folder does not exist, which is due to the first time of running the g
 
 Either:
 
-1. You can directly clone the repo:
+1. You can directly clone the repo (recommended for marking purpose):
 
 ```shell
 $ git clone https://github.com/caiyangcy/SCMM.git
