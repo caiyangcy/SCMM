@@ -88,7 +88,7 @@ To do this (taken from SMAC):
 
 ## Unit Tester Map
 
-A unit tester map can be found at unit tester map folder. Source at *[unit-tester](https://www.sc2mapster.com/projects/unit-tester).
+A unit tester map can be found at unit tester map folder. Source at [unit-tester](https://www.sc2mapster.com/projects/unit-tester).
 
 The purpose of this map is to help design some new scenarios. 
 
