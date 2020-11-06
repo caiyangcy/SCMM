@@ -71,7 +71,9 @@ class NN_Agent:
         return closest_id
         
     def _fill_params(self, unit, prev_move=None, prev_prev_move=None):
-        
+        '''
+        Fill parameters according to the 8-area partition and historical information
+        '''
         for i in range(1, 9):
             exec("enermy_avg_dist_"+str(i)+"=0")
             exec("ally_avg_dist_"+str(i)+"=0")
@@ -188,6 +190,9 @@ class NN_Agent:
         
     
     def _get_action(self, net_ind):
+        '''
+        select actions based on threshold and relative magnitude
+        '''
         out = self.net[net_ind](self.params)
         if out[-1] > 0.5:
             action = self.n_actions_no_attack
@@ -232,6 +237,9 @@ class NN_Agent:
         return max_rewards, mean_rewards, min_rewards
         
     def topology_update(self, rewards):
+        '''
+        update weights
+        '''
         r_argmax= np.argmax(rewards)
         best_net = self.net[r_argmax]
         
@@ -276,14 +284,15 @@ class MLP(nn.Module):
         
     
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
-parser.add_argument('--map_name', default='2m_vs_1z', help='The name of the map. The full list can be found by running bin/map_list.')
+parser.add_argument('--map_name', default='2m_vs_1z', type=str, help='The name of the map. The full list can be found by running bin/map_list.')
 parser.add_argument('--step_mul', default=2, type=int, help='How many game steps per agent step (default is 8). None indicates to use the default map step_mul..')
 parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "7").')
 parser.add_argument('--reward_sparse', default=False, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=10, type=int, help='Number of episodes the game will run for.')
-parser.add_argument('--agent', default="AlternatingFire", type=str, help='Number of episodes the game will run for.')
-parser.add_argument('--opt', default=torch.optim.Adam, help='Optimizer class')
+parser.add_argument('--evolve_low', default=0.99, type=float, help='Lower bound for weight change.')
+parser.add_argument('--evolve_low', default=1.01, type=float, help='Higher bound for weight change.')
+
 
 args = parser.parse_args()
         
@@ -295,8 +304,6 @@ if __name__ == "__main__":
     reward_sparse = args.reward_sparse
     debug = args.debug 
     n_episodes = args.n_episodes
-    lr = args.lr
-    opt = args.opt
 
     env = MMEnv(map_name=map_name, step_mul=step_mul, difficulty=difficulty, reward_sparse=reward_sparse, debug=debug)
     env_info = env.get_env_info()
@@ -304,7 +311,7 @@ if __name__ == "__main__":
     n_actions = env_info["n_actions"]
     n_agents = env_info["n_agents"]
 
-    nn_agent = NN_Agent(n_agents, n_episodes, opt)
+    nn_agent = NN_Agent(n_agents, n_episodes, args.evolve_low, args.evolve_high)
     nn_agent.fit(env)
     max_rewards, mean_rewards, min_rewards = nn_agent.evolve()
     

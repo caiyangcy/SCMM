@@ -32,10 +32,10 @@ class GA_agent:
         return reward, terminated, info 
     
     def _calc_actual(self, ally):
-        # v1: range of unit - range of closest enermy
+        # v1: range of unit - range of closest enemy
         # v2: sum of enermies within unit range
-        # v3: weakest enermy HP divied by unit damage
-        # v4: the number of enermy - the number of ally
+        # v3: weakest enemy HP divied by unit damage
+        # v4: the number of enemy - the number of ally
         ally_shoot_range = self.env.unit_shoot_range(ally)
         target_items = self.env.enemies.items()
         
@@ -65,11 +65,14 @@ class GA_agent:
                 
         v1 = ally_shoot_range-self.env.unit_shoot_range(min_e_unit)
         v3 = min_hp/self.env.unit_damage(ally)
-        v4 = self.env.count_alive_units('ally')-self.env.count_alive_units('enermy')
+        v4 = self.env.count_alive_units('ally')-self.env.count_alive_units('enemy')
         
         return [v1, v2, v3, v4], [min_e_id, min_hp_e_id], [min_e_unit, min_hp_e_unit]
     
     def _action_decision(self, unit):
+        '''
+        select actions based on threshold and priority
+        '''
         move_value = np.sum(self.chromosome[:4])
         dist_first_attack = np.sum(self.chromosome[4:8])
         hp_first_attack = np.sum(self.chromosome[8:12])
@@ -183,10 +186,10 @@ class GA:
         self.pop[:,[2,6,10,14]] = np.random.uniform(low=0, high=5, size=(self.pop_size, 4))
         self.pop[:,[3,7,11,15]] = np.random.randint(low=-1, high=21, size=(self.pop_size, 4))
         
-        # v1: range of unit - range of closest enermy
+        # v1: range of unit - range of closest enemy
         # v2: sum of enermies within unit range
-        # v3: weakest enermy HP divied by unit damage
-        # v4: the number of enermy - the number of ally
+        # v3: weakest enemy HP divied by unit damage
+        # v4: the number of enemy - the number of ally
         for p in range(self.pop_size):
             # v1: [-10.25, 10.75] --> [-10, 10]
             # v2: [0, 5]
@@ -234,13 +237,12 @@ class GA:
 
 
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
-parser.add_argument('--map_name', default='25m', help='The name of the map. The full list can be found by running bin/map_list.')
+parser.add_argument('--map_name', default='25m', type=str, help='The name of the map. The full list can be found by running bin/map_list.')
 parser.add_argument('--step_mul', default=2, type=int, help='How many game steps per agent step (default is 8). None indicates to use the default map step_mul..')
-parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "7").')
+parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "A").')
 parser.add_argument('--reward_sparse', default=False, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=10, type=int, help='Number of episodes the game will run for.')
-parser.add_argument('--agent', default="AlternatingFire", type=str, help='Number of episodes the game will run for.')
 parser.add_argument('--population_size', default=40, type=int, help='Population size')
 args = parser.parse_args()
         

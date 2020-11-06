@@ -757,7 +757,7 @@ class MMEnv(MultiAgentEnv):
             for agent_id in range(self.n_agents):
                 unit = self.get_unit_by_id(agent_id) 
                 count += unit.health > 0
-        elif kind == 'enermy':
+        elif kind == 'enemy':
             target_items = self.enemies.items()
             for t_id, t_unit in target_items: # t_id starts from 0
                 count += t_unit.health > 0
