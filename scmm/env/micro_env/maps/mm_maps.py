@@ -240,9 +240,9 @@ map_param_registry = {
         "map_content": "zealots",
         "map_type": ["heterogeneous", "asymmeytic", "wall_off"],
     },
-    "6h_vs_8z": {
+    "6h_vs_5z": {
         "n_agents": 6,
-        "n_enemies": 8,
+        "n_enemies": 5,
         "limit": 150,
         "a_race": "Z",
         "b_race": "P",

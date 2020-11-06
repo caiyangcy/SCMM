@@ -1,5 +1,5 @@
 import numpy as np
-from scmm.utils.game_utils import fine_closest_position, find_weakest_injured
+from scmm.utils.game_utils import fine_closest_position, find_weakest_injured, fine_weakest_enemy
 
 class FocusFire():
     '''
@@ -15,6 +15,7 @@ class FocusFire():
     def fit(self, env):
         self.env = env
         self.n_actions_no_attack = self.env.n_actions_no_attack
+        self.actions = self.env.get_non_attack_action_set()
         
     def step(self, plot_level):                    
        
@@ -22,23 +23,26 @@ class FocusFire():
             actions = self.find_focus_targets()
         else:
             center_x, center_y = self.env.get_ally_center(True)
-            min_e_id, _, _ = fine_closest_position((center_x, center_y), self.env.enemies) # focus on attacking the closest one
-            # min_e_id, _ = fine_weakest_enemy(self.env.enemies) # Uncomment this line to attack on the weakest one
+            # min_e_id, _, _ = fine_closest_position((center_x, center_y), self.env.enemies) # focus on attacking the closest one
+            min_e_id, _ = fine_weakest_enemy(self.env.enemies) # Uncomment this line to attack on the weakest one
             actions = []
 
             for agent_id in range(self.n_agents):
                 unit = self.env.get_unit_by_id(agent_id)    
-
+                if unit.health <= 0:
+                    actions.append(self.actions['No-Op'])
+                    continue
+                
                 if self.env.unit_to_name(unit) == 'medivac':
                     min_a_id = find_weakest_injured(agent_id, self.env.agents)
                     if min_a_id is None:
-                        actions.append(1)
+                        actions.append(self.actions['Stop'])
                     else:
                         actions.append(self.n_actions_no_attack+min_a_id)
                         
                 else:
                     actions.append(self.n_actions_no_attack+min_e_id)
-        
+
         reward, terminated, info = self.env.step(actions)
         if plot_level > 0:
             return actions, reward, terminated, info 
@@ -76,23 +80,22 @@ class FocusFire():
         hp_arr = hp_arr[ind]
         e_id_arr = e_id_arr[ind]
         
-        attack_id = []
+        actions = []
         enermy_counter, accum_damage = 0, 0
-
         for agent_id in range(self.n_agents):
             unit = self.env.get_unit_by_id(agent_id)    
             if unit.health > 0:
                 if self.env.unit_to_name(unit) == 'medivac':
                     min_a_id = find_weakest_injured(agent_id, self.env.agents)
                     if min_a_id is None:
-                        attack_id.append(1)
+                        actions.append(1)
                     else:
-                        attack_id.append(self.n_actions_no_attack+min_a_id)
+                        actions.append(self.n_actions_no_attack+min_a_id)
                     
                     continue
                 
                 accum_damage += self.env.unit_damage(unit)
-                attack_id.append(e_id_arr[enermy_counter]+self.n_actions_no_attack)
+                actions.append(e_id_arr[enermy_counter]+self.n_actions_no_attack)
                 
                 if hp_arr[enermy_counter] <= accum_damage:
                     accum_damage = 0
@@ -100,11 +103,11 @@ class FocusFire():
                     if enermy_counter+1 >= len(e_id_arr):
                         remaining = self.n_agents - agent_id - 1
                         for _ in range(remaining):
-                            attack_id.append(np.random.randint(0, len(e_id_arr))+self.n_actions_no_attack)
-                            return attack_id 
+                            actions.append(np.random.randint(0, len(e_id_arr))+self.n_actions_no_attack)
+                            return actions 
                     else:
                         enermy_counter += 1
             else:
-                attack_id.append(0)
+                actions.append(self.actions['No-Op'])
         
-        return attack_id 
+        return actions 

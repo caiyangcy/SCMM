@@ -53,8 +53,8 @@ for i, map_name in tqdm(enumerate(map_names)):
     alpha = 0
     
     for e in range(n_episodes):
-        agent = FocusFire(n_agents, True) # change the agent name and params to run the evaluation
-
+        agent = HybridAttackHeal(n_agents, 0) # AC
+        
         agent.fit(env)
         agent.env.reset()
             
@@ -84,7 +84,7 @@ for i, map_name in tqdm(enumerate(map_names)):
         ax.text(i, y+0.01, round(y, 3), horizontalalignment='center')
     
     # Title, Label, Ticks and Ylim
-    ax.set_title(f'Focus Fire - {map_name}', fontdict={'size':22})
+    ax.set_title(f'Attack Closest - {map_name}', fontdict={'size':22})
     ax.set(ylabel='Final Rewards', ylim=(0, 2))#, fontdict={'size':20})
     ax.set(xlabel='Episode')#, fontdict={'size':20})
     plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right')#, fontsize=15)
@@ -92,6 +92,6 @@ for i, map_name in tqdm(enumerate(map_names)):
     if not os.path.exists('plots/'):
         os.makedirs('plots/')
     
-    fig.savefig(f"plots/FF_{map_name}.pdf")
+    fig.savefig(f"plots/AC_{map_name}.pdf")
     plt.close(fig)
     
