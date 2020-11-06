@@ -40,7 +40,7 @@ The following are some heterogeneous ones
 | 3s_vs_3z_medium | 3 Stalkers | 3 Zealots | asymmetric & kiting |
 | 3s_vs_4z_medium | 3 Stalkers | 4 Zealots | asymmetric & kiting |
 | 3s_vs_5z_medium | 3 Stalkers | 5 Zealots | asymmetric & kiting |
-| 6h_vs_8z | 6 Hydralisks  | 8 Zealots |  asymmetric & focus fire |
+| 6h_vs_5z | 6 Hydralisks  | 5 Zealots |  asymmetric & focus fire |
 | corridor | 6 Zealots  | 24 Zerglings |  asymmetric & wall off |
 | bane_vs_bane | 20 Zerglings & 4 Banelings  | 20 Zerglings & 4 Banelings |  asymmetric & positioning |
 | so_many_banelings| 7 Zealots  | 32 Banelings |  asymmetric & positioning |
