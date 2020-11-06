@@ -84,7 +84,7 @@ for i, map_name in tqdm(enumerate(map_names)):
         ax.text(i, y+0.01, round(y, 3), horizontalalignment='center', fontsize=12)
         
     # Title, Label, Ticks and Ylim
-    ax.set_title(f'Positioning - {map_name}', fontdict={'size':22})
+    ax.set_title(f'Attack Weakest - {map_name}', fontdict={'size':22})
 
     ax.set_ylabel('Final Rewards', fontsize=20)
     ax.set_ylim(0, 2)
@@ -97,6 +97,6 @@ for i, map_name in tqdm(enumerate(map_names)):
     if not os.path.exists('plots/'):
         os.makedirs('plots/')
     
-    fig.savefig(f"plots/Pos_{map_name}.pdf")
+    fig.savefig(f"plots/AW_{map_name}.pdf")
     plt.close(fig)
     
