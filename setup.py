@@ -37,6 +37,6 @@ setuptools.setup(
         'absl-py>=0.1.0',
         'numpy==1.19.3', # 1.19.4 has a bug causing failure on sanity check
         'matplotlib==3.2.2',
-        'pytorch==1.4.0'
+        'torch==1.4.0'
     ],
 )
