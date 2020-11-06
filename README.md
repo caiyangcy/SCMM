@@ -9,19 +9,15 @@ If `Maps` folder does not exist, which is due to the first time of running the g
 
 # Installing SCMM
 
-Either:
-
-1. You can directly clone the repo (recommended for marking purpose):
 
 ```shell
 $ git clone https://github.com/caiyangcy/SCMM.git
+$ pip install SCMM/
 ```
-or:
-
-2. Use pip install:
+You also have to install PyTorch, version 1.4.0 is one used in the project
 
 ```shell
-$ pip install SC2MM
+$ pip install torch===1.4.0 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
 # Maps
@@ -92,14 +88,16 @@ To do this (taken from SMAC):
 
 ## Unit Tester Map
 
-A unit tester map can be found at unit tester map folder. Source at *[unit-tester](https://www.sc2mapster.com/projects/unit-tester).
+A unit tester map can be found at unit tester map folder. Source at [unit-tester](https://www.sc2mapster.com/projects/unit-tester).
 
 The purpose of this map is to help design some new scenarios. 
 
 
 # Run
 
-Refer to the names of agents to find out the details of running agents.
+Refer to the names of agents to find out the details of running agents. 
+
+Make sure you are under the correct folder `cd SCMM`
 
 ## Scripted
 
