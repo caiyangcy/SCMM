@@ -45,7 +45,7 @@ The following are some heterogeneous ones
 | bane_vs_bane | 20 Zerglings & 4 Banelings  | 20 Zerglings & 4 Banelings |  asymmetric & positioning |
 | so_many_banelings| 7 Zealots  | 32 Banelings |  asymmetric & positioning |
 | 2c_vs_64zg| 2 Colossi  | 64 Zerglings |  asymmetric & positioning |
-| 6s4z_vs_10b30z | 6 Stalkers & 4 Zealots | 10 Baneling & 30 Zerglings | asymmetric & attracting fire |
+| 6s4z_vs_8b15z | 6 Stalkers & 4 Zealots | 8 Baneling & 15 Zerglings | asymmetric & attracting fire |
 | 10z5b_vs_2z3s | 10 Zerglings & 5 Banelings | 2 Zealots & 3 Stalkesr | asymmetric & attracting fire |
 | 1s2m_vs_5m | 1 Siege Tank & 2 Marines | 5 Marines  | asymmetric & attracting fire |
 | 6s1s_vs_10r | 6 Stalkers & 1 Sentry | 10 Roaches | asymmetric & blocking enemy |
