@@ -11,17 +11,20 @@ from scmm.env.micro_env.mm_env import MMEnv
 from scmm.utils.game_show import game_show, game_show_adv
 
 from scmm.env.micro_env.maps.mm_maps import get_scmm_map_registry
-import argparse
 import matplotlib.pyplot as plt
 
-import sys
 import numpy as np
 import random
 from tqdm import tqdm
+import os
 
 '''
-This file run all the agents on all the maps and collect the results(rewards)
+This file run the agents on some of maps and collect the results(rewards). 
+This file is not formatted nicely and not included in pypi package.
+Change the agent and its params along with the map name to run it.
+Results are saved under plots folder
 '''
+
 seed = 42
 np.random.seed(seed)
 random.seed(seed)
@@ -32,16 +35,6 @@ map_registry = get_scmm_map_registry()
 map_names = map_registry.keys()
 
 n_episodes = 10
-# map_names = ['3m', '3s_vs_4z_medium', '3s_vs_5z_medium']
-
-# map_names = ['1m', '3m', '8m']
-
-# map_names = ['bane_vs_bane', 'so_many_baneling', '2c_vs_64zg'] # Need to run on 1st and 3rd
-# map_names = ['bane_vs_bane', '2c_vs_64zg'] # Need to run on 1st and 3rd
-# map_names = ['bane_vs_bane']
-# map_names = ['corridor']
-# map_names = ['6s1s_vs_10r']
-# map_names = ['2m_vs_1z', '2s_vs_1sc']
 
 for i, map_name in tqdm(enumerate(map_names)):
     
@@ -59,21 +52,9 @@ for i, map_name in tqdm(enumerate(map_names)):
     
     alpha = 0
     
-    agent = HybridAttackHeal(n_agents, alpha)
-    # agent = Kiting(n_agents, consuctive_attack_count=10)
-    # agent = AlternatingFire(n_agents)
-    # agent = FocusFire(n_agents)
-    # agent = Positioning(n_agents)
-    # agent = WallOff(n_agents)
-    # agent = BlockEnemy(n_agents)
-    
-    
-    # agent.fit(env)
-    
-    
     for e in range(n_episodes):
-        agent = FocusFire(n_agents, False)
-        # agent = DyingRetreat(n_agents)
+        agent = FocusFire(n_agents, True) # change the agent name and params to run the evaluation
+
         agent.fit(env)
         agent.env.reset()
             
@@ -103,10 +84,14 @@ for i, map_name in tqdm(enumerate(map_names)):
         ax.text(i, y+0.01, round(y, 3), horizontalalignment='center')
     
     # Title, Label, Ticks and Ylim
-    ax.set_title(f'Dying Retreat - {map_name}', fontdict={'size':22})
-    ax.set(ylabel='Final Rewards', ylim=(0, 2), fontdict={'size':20})
-    ax.set(xlabel='Episode', fontdict={'size':20})
-    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right', fontsize=15)
-    fig.savefig(f"plots_new/DR_{map_name}.pdf")
+    ax.set_title(f'Focus Fire - {map_name}', fontdict={'size':22})
+    ax.set(ylabel='Final Rewards', ylim=(0, 2))#, fontdict={'size':20})
+    ax.set(xlabel='Episode')#, fontdict={'size':20})
+    plt.xticks(np.arange(n_episodes), np.arange(n_episodes), horizontalalignment='right')#, fontsize=15)
+    
+    if not os.path.exists('plots/'):
+        os.makedirs('plots/')
+    
+    fig.savefig(f"plots/FF_{map_name}.pdf")
     plt.close(fig)
     

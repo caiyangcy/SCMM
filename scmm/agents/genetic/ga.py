@@ -78,12 +78,6 @@ class GA_agent:
         v = sum(v)
         decision = np.zeros(3)
         action = None
-        # if v>move_value:
-        #     decision[0] = 1
-        # if v>dist_first_attack:
-        #     decision[1] = 1
-        # if v>hp_first_attack:
-        #     decision[2] = 1
         if v<move_value:
             decision[0] = 1
         if v>dist_first_attack:

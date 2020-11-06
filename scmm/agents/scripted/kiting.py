@@ -44,7 +44,7 @@ class Kiting():
                 
             else: # find enermy and make them give a chase
                 # passive
-                actions.append(self.actions['No-Op'])
+                actions.append(self.actions['Stop'])
                 
         
         reward, terminated, info = self.env.step(actions)

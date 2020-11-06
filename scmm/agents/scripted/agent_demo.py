@@ -13,20 +13,18 @@ import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
-import sys
-import time
-
 parser = argparse.ArgumentParser(description='Run an agent with actions randomly sampled.')
-parser.add_argument('--map_name', default='MMM2', help='The name of the map. The full list can be found by running bin/map_list.')
+parser.add_argument('--map_name', default='MMM2', type=str, help='The name of the map. The full list can be found by running bin/map_list.')
 parser.add_argument('--step_mul', default=2, type=int, help='How many game steps per agent step (default is 8). None indicates to use the default map step_mul..')
 parser.add_argument('--difficulty', default='A', help='The difficulty of built-in computer AI bot (default is "7").')
 parser.add_argument('--reward_sparse', default=True, help='Receive 1/-1 reward for winning/loosing an episode (default is False). The rest of reward parameters are ignored if True.')
 parser.add_argument('--debug', default=True, help='Log messages about observations, state, actions and rewards for debugging purposes (default is False).')
 parser.add_argument('--n_episodes', default=1, type=int, help='Number of episodes the game will run for.')
 parser.add_argument('--agent', default="HybridAttackHeal", type=str, help='Number of episodes the game will run for.')
-parser.add_argument('--alpha', default=0, type=int, help='Parameter used for calculating score in HybridAttack.')
-parser.add_argument('--plot_level', default=0, help='Whether using advanced plot or not')
-
+parser.add_argument('--alpha', default=0, type=float, help='Parameter used for calculating score in HybridAttack.')
+parser.add_argument('--consec_attack', default=10, type=int, help='Parameter used for consecutive attack counts in Kiting.')
+parser.add_argument('--overkill', default=True, type=bool, help='Parameter used for overkill in FocusFire.')
+parser.add_argument('--plot_level', default=0,  type=int, help='Whether using advanced plot or not')
 
 
 args = parser.parse_args()
@@ -34,9 +32,6 @@ args = parser.parse_args()
 
 if __name__ == "__main__":
     
-    minor = sys.version_info.minor
-    higher = minor >= 7
-        
     map_name = args.map_name
     step_mul = args.step_mul
     difficulty = args.difficulty
@@ -52,15 +47,14 @@ if __name__ == "__main__":
     n_actions = env_info["n_actions"]
     n_agents = env_info["n_agents"]
     
-    # agent = globals()[args.agent](n_agents, alpha=1)#, False)
-    # agent = HybridAttackHeal(n_agents, 1)
-    # agent = Kiting(n_agents, consuctive_attack_count=10)
-    # agent = AlternatingFire(n_agents)
-    agent = DyingRetreat(n_agents)
-    # agent = FocusFire(n_agents)
-    # agent = Positioning(n_agents)
-    # agent = WallOff(n_agents)
-    # agent = BlockEnemy(n_agents)
+    if args.agent == 'HybridAttackHeal':
+        agent = globals()[args.agent](n_agents, alpha=args.alpha)
+    elif args.agent == 'Kiting':
+        agent = globals()[args.agent](n_agents, consuctive_attack_count=args.consec_attack)
+    elif args.agent == 'FocusFire':
+        agent = globals()[args.agent](n_agents, no_over_kill=not args.overkill)
+    else:
+        agent = globals()[args.agent](n_agents)
     
     agent.fit(env)
     

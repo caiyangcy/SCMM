@@ -40,7 +40,9 @@ class HybridAttackHeal():
                     else:
                         action = self.n_actions_no_attack+min_score_e_id
                     
-            actions.append(action)
+                actions.append(action)
+            else:
+                actions.append(self.actions['No-Op'])
             
         reward, terminated, info = self.env.step(actions)
         
