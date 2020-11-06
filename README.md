@@ -12,7 +12,7 @@ Two ways:
 
 1. You can directly clone the repo:
 
-        git clone https://github.com/caiyangcy/SC2DC.git
+        git clone https://github.com/caiyangcy/SCMM.git
     
 2. Use pip install:
 
