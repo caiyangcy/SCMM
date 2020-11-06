@@ -3,6 +3,7 @@ Simple game visualisation
 '''
 
 import matplotlib.pyplot as plt
+ACTION_NO_ATTACK = 8
 
 def game_show(color, markersize, map_size, enemies_positions, allies_positions):
     plt.clf()
@@ -18,7 +19,7 @@ def game_show(color, markersize, map_size, enemies_positions, allies_positions):
     plt.pause(1e-10)
         
     
-def game_show_adv(color, markersize, map_size, enemies, allies, actions):
+def game_show_adv(color, markersize, map_size, enemies, allies, actions, env):
     plt.clf()
     
     for _, e_unit in enemies.items():
@@ -30,9 +31,13 @@ def game_show_adv(color, markersize, map_size, enemies, allies, actions):
             pos_x, pos_y = a_unit.pos.x, a_unit.pos.y
             plt.plot([pos_x], [pos_y], color[1], markersize=20.0, alpha=0.5)
             action = actions[a_id]
-            if action > 6:
+            if action > ACTION_NO_ATTACK:
                 action = actions[a_id]
-                plt.plot([pos_x, enemies[action-6].pos.x], [pos_y, enemies[action-6].pos.y], 'g-.', linewidth=2)
+                if env.unit_to_name(a_unit) == 'medivac':
+                    plt.plot([pos_x, allies[action-ACTION_NO_ATTACK].pos.x], [pos_y, allies[action-ACTION_NO_ATTACK].pos.y], 'g-.', linewidth=2)
+    
+                else:
+                    plt.plot([pos_x, enemies[action-ACTION_NO_ATTACK].pos.x], [pos_y, enemies[action-ACTION_NO_ATTACK].pos.y], 'g-.', linewidth=2)
                 
             else:
                 # N S E W: 2, 3, 4, 5

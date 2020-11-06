@@ -77,7 +77,7 @@ if __name__ == "__main__":
             map_size = (agent.env.map_x, agent.env.map_y)
             
             if plot_level == 2:
-                game_show_adv(['b.', 'r.'], 20.0, map_size, agent.env.enemies, agent.env.agents, actions)
+                game_show_adv(['b.', 'r.'], 20.0, map_size, agent.env.enemies, agent.env.agents, actions, agent.env)
             elif plot_level == 1:
                 ally_pos, enemy_pos = agent.env.get_ally_positions(plot_level), agent.env.get_enemy_positions(plot_level)
                 game_show(['b.', 'r.'], 20.0, map_size, enemy_pos, ally_pos)
