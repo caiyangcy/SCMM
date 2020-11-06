@@ -126,5 +126,8 @@ $ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --pl
 $ python -m scmm.agents.potential_fields.forces --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
 ```
 
+# Plots
+You can generate plots of rewards using `eval.py` under `scmm.agents`. You can find some pre-generated plots [here](https://github.com/caiyangcy/SCMM/tree/master/plots)
+
 # Acknowledgement
 * The coding on environment and part of the maps were based on [SMAC](https://github.com/oxwhirl/smac). Refer to the repo for details and license.
