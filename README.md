@@ -103,25 +103,29 @@ Refer to the names of agents to find out the details of running agents.
 
 ## Scripted
 
+Make sure the agent name and map names match when run the scripted agents. Agents like `FocusFire`, `HybridAttackHeal`, `DyingRetreat` work on all maps but other agents like `Kiting`, `Positioning`, `BlockingEnemy` only works for some specific maps.
+
 ```shell
-$ python -m scmm.agents.scripted.agent_demo -n_episode=10 -map_name=3m -difficulty=7 -plot_level=0 -agent=FocusFire
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3m --difficulty=7 --plot_level=0 --agent=FocusFire
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=8m --difficulty=6 --plot_level=2 --agent=HybridAttackHeal --alpha=0.5
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3s_vs_3z_medium --difficulty=A --plot_level=0 --agent=Kiting 
 ```
     
 ## Genetic
     
 ```shell
-$ python -m scmm.agents.genetic.ga -n_episode=10 -map_name=8m -difficulty=7 -plot_level=0 
+$ python -m scmm.agents.genetic.ga --n_episodes=10 --map_name=8m --difficulty=7 --plot_level=0 
 ```
     
 ## NN
 
 ```shell
-$ python -m scmm.agents.nn.nn -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+$ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
 ```    
 
 ## Potential Field
 ```shell
-$ python -m scmm.agents.potential_fields.forces -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+$ python -m scmm.agents.potential_fields.forces --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
 ```
 
 # Acknowledgement
