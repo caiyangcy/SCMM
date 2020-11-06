@@ -3,28 +3,35 @@
 # Installing StarCraft II
 You can find lastest verson of StarCraft II at [here](https://starcraft2.com/en-us/)
 
-After installing the game, navigate to *installing_path/StarCraft II/Maps* and move a copy of all the maps in SCMM there.
+After installing the game, navigate to `installing_path/StarCraft II/Maps` and move a copy of all the [maps](https://github.com/caiyangcy/SCMM/tree/master/maps) in SCMM there.
 
-If *Maps* folder does not exist, then manually create one
+If `Maps` folder does not exist, which is due to the first time of running the game, then you can manually create one
 
 # Installing SCMM
-Two ways:
+
+Either:
 
 1. You can directly clone the repo:
 
-        git clone https://github.com/caiyangcy/SCMM.git
-    
+```shell
+$ git clone https://github.com/caiyangcy/SCMM.git
+```
+or:
+
 2. Use pip install:
 
-        pip install SC2MM
-
+```shell
+$ pip install SC2MM
+```
 
 # Maps
 * You can find a list of maps [here](https://github.com/caiyangcy/SC2DC/blob/master/docs/map_info.md)
 
 Alternatively, you can run:
 
-    python -m scmm.bin.map_list
+```shell
+$ python -m scmm.bin.map_list
+```
 
 ## View a Map
 
@@ -44,43 +51,43 @@ The most important thing when creating units on a new map is to disable some rea
 
 To do this (taken from SMAC):
 
-        Open editor, data editor, unit tab
+        1. Open editor, data editor, unit tab
         
-        Right click and click add new unit
+        2. Right click and click add new unit
         
-        Name the new unit, click suggest right below it
+        3. Name the new unit, click suggest right below it
         
-        Leave the "parent:" row alone. That determines what we're making. We want to make a unit
+        4. Leave the "parent:" row alone. That determines what we're making. We want to make a unit
         
-        Select the unit you want to copy (bottom of the new opened window, "copy from" row) e.g. zealot if you're copying zealot
+        5. Select the unit you want to copy (bottom of the new opened window, "copy from" row) e.g. zealot if you're copying zealot
         
-        Set the "Object family:," "Race:," and "Object Type:" as desired. THESE DO NOTHING but make it easier for you to find your new unit once it's made. e.g. you probably want a new zerg unit to be in the zerg section when you go to place it on your map or something.
+        6. Set the "Object family:," "Race:," and "Object Type:" as desired. THESE DO NOTHING but make it easier for you to find your new unit once it's made. e.g. you probably want a new zerg unit to be in the zerg section when you go to place it on your map or something.
         
-        Press okay, you're almost done
+        7. Press okay, you're almost done
         
-        Click the plus sign on the data editor tabs, go to edit actor data, actors
+        8. Click the plus sign on the data editor tabs, go to edit actor data, actors
         
-        Click the new actors tab
+        9. Click the new actors tab
         
-        Right click and click add new actor
+        10. Right click and click add new actor
         
-        Name it and click suggest like before
+        11. Name it and click suggest like before
         
-        Change the "Actor Type:" row to unit
+        12. Change the "Actor Type:" row to unit
         
-        Select what you want to copy from (bottom of the new opened window again) e.g. zealot if you're coping a zealot
+        13. Select what you want to copy from (bottom of the new opened window again) e.g. zealot if you're coping a zealot
         
-        Press okay
+        14. Press okay
         
-        Click on your new actor
+        15. Click on your new actor
         
-        At the bottom right of the window where it says "Token" and then "Unit Name," change the unit name to the name of your unit e.g. Zealot RL
+        16. At the bottom right of the window where it says "Token" and then "Unit Name," change the unit name to the name of your unit e.g. Zealot RL
         
-        Go back to the Unit tab, find the new unit and modify the following fields:
+        17. Go back to the Unit tab, find the new unit and modify the following fields:
         
-            (Basic) Stats: Supplies - 0
-            Combat: Default Acquire Level - Passive
-            Behaviour: Response - No Response
+            i.   (Basic) Stats: Supplies - 0
+            ii.  Combat: Default Acquire Level - Passive
+            iii. Behaviour: Response - No Response
 
 
 ## Unit Tester Map
@@ -96,19 +103,26 @@ Refer to the names of agents to find out the details of running agents.
 
 ## Scripted
 
-    python -m scmm.agents.scripted.agent_demo -n_episode=10 -map_name=3m -difficulty=7 -plot_level=0 -agent=FocusFire
+```shell
+$ python -m scmm.agents.scripted.agent_demo -n_episode=10 -map_name=3m -difficulty=7 -plot_level=0 -agent=FocusFire
+```
     
 ## Genetic
     
-    python -m scmm.agents.genetic.ga -n_episode=10 -map_name=8m -difficulty=7 -plot_level=0 
+```shell
+$ python -m scmm.agents.genetic.ga -n_episode=10 -map_name=8m -difficulty=7 -plot_level=0 
+```
     
 ## NN
 
-    python -m scmm.agents.nn.nn -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
-    
-## Potential Field
+```shell
+$ python -m scmm.agents.nn.nn -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+```    
 
-    python -m scmm.agents.potential_fields.forces -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+## Potential Field
+```shell
+$ python -m scmm.agents.potential_fields.forces -n_episode=10 -map_name=25m -difficulty=7 -plot_level=0 
+```
 
 # Acknowledgement
-* The coding is based on [SMAC](https://github.com/oxwhirl/smac). Refer to the repo for details and license.
+* The coding on environment and part of the maps were based on [SMAC](https://github.com/oxwhirl/smac). Refer to the repo for details and license.
