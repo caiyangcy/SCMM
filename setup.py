@@ -22,7 +22,7 @@ setuptools.setup(
         'scmm.agents.nn',
         'scmm.agents.genetic',
         'scmm.agents.potential_fields',
-        'scmm.agents.scipted',
+        'scmm.agents.scripted',
         'scmm.utils'
     ],
     classifiers=[
