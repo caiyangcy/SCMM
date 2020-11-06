@@ -43,7 +43,7 @@ The terrain and functionality of a map can be changed by StarCraft II Editor
 
 ## Create a Map
 
-Create a map using StarCraft II Editor. After creation, make sure add the map to *scmm/env/micro_env/maps/mm_maps.py* and also make sure the map is added to the game folder
+Create a map using StarCraft II Editor. After creation, make sure add the map to `scmm/env/micro_env/maps/mm_maps.py` and also make sure the map is added to the game folder
 
 ## Create an unit
 
