@@ -39,4 +39,7 @@ setuptools.setup(
         'matplotlib==3.2.2',
         'torch==1.4.0'
     ],
+    dependency_links=[
+      'https://download.pytorch.org/whl/torch_stable.html'
+    ],
 )
