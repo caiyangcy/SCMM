@@ -29,6 +29,8 @@ Alternatively, you can run:
 $ python -m scmm.bin.map_list
 ```
 
+Among all the maps, there are two maps that are never used in the project: `6m1r_vs_4g` and `12m2r_vs_7g`. The reason is due to invisible ghosts cannot be identified as part of the observations in the environment and hence it is difficult to use such scenarios as others. The user shouldn't use them in this code repo. The reason for keeping them is just for refernce purpose.
+
 ## View a Map
 
 All the maps can be viewed by StarCraft II Editor
@@ -90,7 +92,7 @@ To do this (taken from SMAC):
 
 A unit tester map can be found at unit tester map folder. Source at [unit-tester](https://www.sc2mapster.com/projects/unit-tester).
 
-The purpose of this map is to help design some new scenarios. 
+The purpose of this map is to help design some new scenarios. To use it, simply open it in map editor and click run button.
 
 
 # Run
@@ -104,27 +106,28 @@ Make sure you are under the correct folder `cd SCMM`
 Make sure the agent name and map names match when run the scripted agents. Agents like `FocusFire`, `HybridAttackHeal`, `DyingRetreat` work on all maps but other agents like `Kiting`, `Positioning`, `BlockingEnemy` only works for some specific maps.
 
 ```shell
-$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3m --difficulty=7 --plot_level=0 --agent=FocusFire
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3m --difficulty=7 --plot_level=0 --agent=FocusFire --overkill=True
 $ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=8m --difficulty=6 --plot_level=2 --agent=HybridAttackHeal --alpha=0.5
-$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3s_vs_3z_medium --difficulty=A --plot_level=0 --agent=Kiting 
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3s_vs_3z_medium --difficulty=A --plot_level=0 --agent=Kiting --consec_attack=10
 ```
     
 ## Genetic
     
 ```shell
-$ python -m scmm.agents.genetic.ga --n_episodes=10 --map_name=8m --difficulty=7 --plot_level=0 
+$ python -m scmm.agents.genetic.ga --n_episodes=10 --map_name=8m --difficulty=7 --plot_level=0 --population_size=40
 ```
     
 ## NN
 
 ```shell
-$ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
+$ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 --evolve_low=0.99 --evolve_high=1.01
 ```    
 
 ## Potential Field
 ```shell
 $ python -m scmm.agents.potential_fields.forces --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
 ```
+Note that potential field based agent is not tuned and the performance is not expected to be good.
 
 # Plots
 You can generate plots of rewards using `eval.py` under `scmm.agents`. You can find some pre-generated plots [here](https://github.com/caiyangcy/SCMM/tree/master/plots)
