@@ -29,6 +29,8 @@ Alternatively, you can run:
 $ python -m scmm.bin.map_list
 ```
 
+Among all the maps, there are two maps that are never used in the project: `6m1r_vs_4g` and `12m2r_vs_7g`. The reason is due to invisible ghosts cannot be identified as part of the observations in the environment and hence it is difficult to use such scenarios as others. The user shouldn't use them in this code repo. The reason for keeping them is just for refernce purpose.
+
 ## View a Map
 
 All the maps can be viewed by StarCraft II Editor
@@ -90,7 +92,7 @@ To do this (taken from SMAC):
 
 A unit tester map can be found at unit tester map folder. Source at [unit-tester](https://www.sc2mapster.com/projects/unit-tester).
 
-The purpose of this map is to help design some new scenarios. 
+The purpose of this map is to help design some new scenarios. To use it, simply open it in map editor and click run button.
 
 
 # Run
