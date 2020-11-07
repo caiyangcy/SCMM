@@ -106,27 +106,28 @@ Make sure you are under the correct folder `cd SCMM`
 Make sure the agent name and map names match when run the scripted agents. Agents like `FocusFire`, `HybridAttackHeal`, `DyingRetreat` work on all maps but other agents like `Kiting`, `Positioning`, `BlockingEnemy` only works for some specific maps.
 
 ```shell
-$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3m --difficulty=7 --plot_level=0 --agent=FocusFire
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3m --difficulty=7 --plot_level=0 --agent=FocusFire --overkill=True
 $ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=8m --difficulty=6 --plot_level=2 --agent=HybridAttackHeal --alpha=0.5
-$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3s_vs_3z_medium --difficulty=A --plot_level=0 --agent=Kiting 
+$ python -m scmm.agents.scripted.agent_demo --n_episodes=10 --map_name=3s_vs_3z_medium --difficulty=A --plot_level=0 --agent=Kiting --consec_attack=10
 ```
     
 ## Genetic
     
 ```shell
-$ python -m scmm.agents.genetic.ga --n_episodes=10 --map_name=8m --difficulty=7 --plot_level=0 
+$ python -m scmm.agents.genetic.ga --n_episodes=10 --map_name=8m --difficulty=7 --plot_level=0 --population_size=40
 ```
     
 ## NN
 
 ```shell
-$ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
+$ python -m scmm.agents.nn.nn --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 --evolve_low=0.99 --evolve_high=1.01
 ```    
 
 ## Potential Field
 ```shell
 $ python -m scmm.agents.potential_fields.forces --n_episodes=10 --map_name=25m --difficulty=7 --plot_level=0 
 ```
+Note that potential field based agent is not tuned and the performance is not expected to be good.
 
 # Plots
 You can generate plots of rewards using `eval.py` under `scmm.agents`. You can find some pre-generated plots [here](https://github.com/caiyangcy/SCMM/tree/master/plots)
